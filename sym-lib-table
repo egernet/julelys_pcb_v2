@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "74HC4051D_TEST")(type "KiCad")(uri "${KIPRJMOD}/ul_74HC4051D-BJ-/KiCADv6/2023-11-27_18-50-40.kicad_sym")(options "")(descr ""))
+  (lib (name "ZX62D-B-5PA8")(type "KiCad")(uri "${KIPRJMOD}/ZX62D_B_5PA8/KiCADv6/2023-12-21_16-57-18.kicad_sym")(options "")(descr ""))
+)

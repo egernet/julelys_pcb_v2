@@ -63,11 +63,11 @@
       39,
       40
     ],
-    "visible_layers": "000103f_ffffffff",
+    "visible_layers": "00010ff_ffffffff",
     "zone_display_mode": 0
   },
   "meta": {
-    "filename": "Julelys V2.kicad_prl",
+    "filename": "Julelys.kicad_prl",
     "version": 3
   },
   "project": {

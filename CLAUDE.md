@@ -71,7 +71,6 @@ Claude AI ──► Mac (julelys_manager) ──► Orange Pi Zero 2
 | 74HC4051 | U2 | 8-channel analog MUX for row selection |
 | 74AHCT1G125 | U6-U9 | Level shifters (3.3V → 5V) |
 | BC847BDW1T1G | U4 | Dual transistor for DTR/RTS auto-reset |
-| SS34-E3/57T | D6 | Reverse polarity protection |
 | SP0503BAHT | D7 | USB ESD protection |
 
 ## SPI Interface (Orange Pi ↔ ESP32)
@@ -96,13 +95,14 @@ Claude AI ──► Mac (julelys_manager) ──► Orange Pi Zero 2
 | J4-J11 | JST B3B-XH-A (×8) | LED strip outputs (5V, Data, GND) |
 | J12 | 1×3 Pin Header | Auxiliary connector |
 | P1 | USB-C | Power + programming |
-| V_IN1 | Screw Terminal | External 5V input |
+| V_IN1, V_IN2 | Screw Terminal (×2) | External 5V input (parallel, ~20A total) |
 
 ## Power
 
-- **Input:** 5V via USB-C or screw terminal
+- **Input:** 5V via USB-C or dual screw terminals (V_IN1 + V_IN2 in parallel)
+- **LED current:** 8 strings × 55 LEDs × 60mA = 26.4A max (use adequate PSU)
 - **Regulator:** AMS1117-3.3V (1A) for ESP32 and logic ICs
-- **LED power:** Direct 5V passthrough to JST connectors
+- **LED power:** Direct 5V passthrough to JST connectors (no reverse polarity protection)
 
 ## Production Output
 

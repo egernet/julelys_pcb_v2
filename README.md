@@ -51,7 +51,13 @@ Orange Pi Zero 2 ──► Julelys HAT ──► 8×55 SK6812 LED Matrix (440 LE
 | J1 | 2×13 Pin Socket | Orange Pi GPIO header |
 | J4-J11 | JST B3B-XH-A ×8 | LED strip outputs |
 | P1 | USB-C | Strøm + programmering |
-| V_IN1 | Skrueterminal | Ekstern 5V |
+| V_IN1, V_IN2 | Skrueterminal ×2 | Ekstern 5V (parallel, ~20A) |
+
+## Strømkrav
+
+- **LED strøm:** 8 strenge × 55 LEDs × 60mA = **26.4A max**
+- Brug ekstern 5V PSU med tilstrækkelig kapacitet
+- Ingen reverse polarity protection (fjernet pga. strømkrav)
 
 ## KiCad Filer
 

@@ -5,6 +5,32 @@
   (paper "A4")
 
   (lib_symbols
+    (symbol "Connector:TestPoint" (pin_numbers hide) (pin_names (offset 0.762) hide) (in_bom yes) (on_board yes)
+      (property "Reference" "TP" (at 0 6.858 0)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "Value" "TestPoint" (at 0 5.08 0)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "Footprint" "" (at 5.08 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "Datasheet" "~" (at 5.08 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (symbol "TestPoint_0_1"
+        (circle (center 0 3.302) (radius 0.762)
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+      )
+      (symbol "TestPoint_1_1"
+        (pin passive line (at 0 0 90) (length 2.54)
+          (name "1" (effects (font (size 1.27 1.27))))
+          (number "1" (effects (font (size 1.27 1.27))))
+        )
+      )
+    )
     (symbol "Device:C" (pin_numbers hide) (pin_names (offset 0.254)) (in_bom yes) (on_board yes)
       (property "Reference" "C" (at 0.635 2.54 0)
         (effects (font (size 1.27 1.27)) (justify left))
@@ -365,7 +391,7 @@
     (stroke (width 0) (type default))
     (uuid 3896d6c5-7b0d-4c54-9944-563efee813a1)
   )
-  (wire (pts (xy 110.49 102.87) (xy 110.49 109.22))
+  (wire (pts (xy 110.49 102.87) (xy 110.49 105.41))
     (stroke (width 0) (type default))
     (uuid 409b002e-d344-4581-8a62-1c94efb26e65)
   )
@@ -373,7 +399,7 @@
     (stroke (width 0) (type default))
     (uuid 42f7f3b6-4721-44ef-b96d-f046b990eb45)
   )
-  (wire (pts (xy 124.46 124.46) (xy 128.27 124.46))
+  (wire (pts (xy 96.52 124.46) (xy 128.27 124.46))
     (stroke (width 0) (type default))
     (uuid 46a4b90b-3ee9-4556-9d14-0c0459310f79)
   )
@@ -408,10 +434,6 @@
   (wire (pts (xy 184.15 120.65) (xy 152.4 120.65))
     (stroke (width 0) (type default))
     (uuid 6e64b156-dbfd-4e32-87eb-0e614db92be7)
-  )
-  (wire (pts (xy 124.46 119.38) (xy 128.27 119.38))
-    (stroke (width 0) (type default))
-    (uuid 7955ff91-afc0-4258-b594-f8908b5cd1f6)
   )
   (wire (pts (xy 166.37 116.84) (xy 184.15 116.84))
     (stroke (width 0) (type default))
@@ -453,7 +475,7 @@
     (stroke (width 0) (type default))
     (uuid 88890371-f77c-4323-999e-1331ed8bc1a4)
   )
-  (wire (pts (xy 124.46 127) (xy 128.27 127))
+  (wire (pts (xy 91.44 127) (xy 128.27 127))
     (stroke (width 0) (type default))
     (uuid 8ec55318-e861-40ea-a5ef-153cbae9476a)
   )
@@ -517,6 +539,14 @@
     (stroke (width 0) (type default))
     (uuid c0677536-1ac9-4fb5-8d04-97222c359aa6)
   )
+  (wire (pts (xy 105.41 119.38) (xy 128.27 119.38))
+    (stroke (width 0) (type default))
+    (uuid c1c2c3c4-d5d6-7890-abcd-ef1234567824)
+  )
+  (wire (pts (xy 101.6 121.92) (xy 128.27 121.92))
+    (stroke (width 0) (type default))
+    (uuid c1c2c3c4-d5d6-7890-abcd-ef1234567825)
+  )
   (wire (pts (xy 44.45 101.6) (xy 52.07 101.6))
     (stroke (width 0) (type default))
     (uuid c6133e25-9385-4602-9ae8-005220a384a8)
@@ -532,10 +562,6 @@
   (wire (pts (xy 144.78 92.71) (xy 144.78 143.51))
     (stroke (width 0) (type default))
     (uuid cac01ec7-7a2b-45bb-b006-ebe285d6ce47)
-  )
-  (wire (pts (xy 124.46 121.92) (xy 128.27 121.92))
-    (stroke (width 0) (type default))
-    (uuid cac7cc7c-9580-4060-a37c-d2fa527c54b1)
   )
   (wire (pts (xy 184.15 143.51) (xy 144.78 143.51))
     (stroke (width 0) (type default))
@@ -876,7 +902,7 @@
     (pin "1" (uuid e31ee467-0a45-470e-8ac4-ef31e77003ab))
     (pin "2" (uuid d9440ee1-28aa-49b0-8834-016e0385a67d))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/9665c677-0b50-4f2a-bdc6-f5e1c3cc96ed"
           (reference "C2") (unit 1)
         )
@@ -919,7 +945,7 @@
     (pin "9" (uuid d82cccd8-3513-42c0-98e6-1bf78fb555cb))
     (pin "13" (uuid bacb6d18-a227-49de-b724-7f4ed3732593))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/9665c677-0b50-4f2a-bdc6-f5e1c3cc96ed"
           (reference "U1") (unit 1)
         )
@@ -944,7 +970,7 @@
     )
     (pin "1" (uuid c46e6b85-92d9-4a8c-b200-9ae08fa2dc55))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/9665c677-0b50-4f2a-bdc6-f5e1c3cc96ed"
           (reference "#PWR03") (unit 1)
         )
@@ -970,7 +996,7 @@
     (pin "1" (uuid 516a170f-7ab6-465f-ad1e-ffda49975e82))
     (pin "2" (uuid 827922b7-d2bd-4b31-bd54-33d2e60e6004))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/9665c677-0b50-4f2a-bdc6-f5e1c3cc96ed"
           (reference "C1") (unit 1)
         )
@@ -978,24 +1004,24 @@
     )
   )
 
-  (symbol (lib_id "power:GND") (at 110.49 109.22 0) (unit 1)
+  (symbol (lib_id "power:GND") (at 110.49 105.41 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 49c352d0-8359-4029-8257-140f7a430f15)
-    (property "Reference" "#PWR04" (at 110.49 115.57 0)
+    (property "Reference" "#PWR04" (at 110.49 111.76 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Value" "GND" (at 110.49 114.3 0)
+    (property "Value" "GND" (at 110.49 110.49 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Footprint" "" (at 110.49 109.22 0)
+    (property "Footprint" "" (at 110.49 105.41 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Datasheet" "" (at 110.49 109.22 0)
+    (property "Datasheet" "" (at 110.49 105.41 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (pin "1" (uuid efd87275-88de-4136-bfa4-a7dcfc350b7b))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/9665c677-0b50-4f2a-bdc6-f5e1c3cc96ed"
           (reference "#PWR04") (unit 1)
         )
@@ -1021,7 +1047,7 @@
     (pin "1" (uuid 11495914-8502-4810-82a7-7ff3c0b0dada))
     (pin "2" (uuid ed5ef448-993a-4451-acf0-d4cc8e318d22))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/9665c677-0b50-4f2a-bdc6-f5e1c3cc96ed"
           (reference "R4") (unit 1)
         )
@@ -1046,7 +1072,7 @@
     )
     (pin "1" (uuid 745f3e28-1aa4-41b5-951f-9cd6a43b033b))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/9665c677-0b50-4f2a-bdc6-f5e1c3cc96ed"
           (reference "#PWR06") (unit 1)
         )
@@ -1071,9 +1097,109 @@
     )
     (pin "1" (uuid d3f0083a-6402-40c3-81ea-99014ce84d1e))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/9665c677-0b50-4f2a-bdc6-f5e1c3cc96ed"
           (reference "#PWR05") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "Connector:TestPoint") (at 105.41 119.38 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid c1c2c3c4-d5d6-7890-abcd-ef1234567804)
+    (property "Reference" "TP4" (at 105.41 113.03 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Value" "MOSI" (at 109.22 115.57 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "TestPoint:TestPoint_Pad_1.0x1.0mm" (at 110.49 119.38 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "~" (at 110.49 119.38 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid c1c2c3c4-d5d6-7890-abcd-ef1234567814))
+    (instances
+      (project "Julelys"
+        (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/9665c677-0b50-4f2a-bdc6-f5e1c3cc96ed"
+          (reference "TP4") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "Connector:TestPoint") (at 101.6 121.92 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid c1c2c3c4-d5d6-7890-abcd-ef1234567805)
+    (property "Reference" "TP5" (at 99.06 115.57 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Value" "MISO" (at 99.06 118.11 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "TestPoint:TestPoint_Pad_1.0x1.0mm" (at 106.68 121.92 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "~" (at 106.68 121.92 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid c1c2c3c4-d5d6-7890-abcd-ef1234567815))
+    (instances
+      (project "Julelys"
+        (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/9665c677-0b50-4f2a-bdc6-f5e1c3cc96ed"
+          (reference "TP5") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "Connector:TestPoint") (at 96.52 124.46 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid c1c2c3c4-d5d6-7890-abcd-ef1234567806)
+    (property "Reference" "TP6" (at 93.98 118.11 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Value" "CLK" (at 93.98 120.65 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "TestPoint:TestPoint_Pad_1.0x1.0mm" (at 101.6 124.46 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "~" (at 101.6 124.46 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid c1c2c3c4-d5d6-7890-abcd-ef1234567816))
+    (instances
+      (project "Julelys"
+        (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/9665c677-0b50-4f2a-bdc6-f5e1c3cc96ed"
+          (reference "TP6") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "Connector:TestPoint") (at 91.44 127 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid c1c2c3c4-d5d6-7890-abcd-ef1234567807)
+    (property "Reference" "TP7" (at 88.9 120.65 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Value" "CS" (at 88.9 123.19 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "TestPoint:TestPoint_Pad_1.0x1.0mm" (at 96.52 127 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "~" (at 96.52 127 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid c1c2c3c4-d5d6-7890-abcd-ef1234567817))
+    (instances
+      (project "Julelys"
+        (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/9665c677-0b50-4f2a-bdc6-f5e1c3cc96ed"
+          (reference "TP7") (unit 1)
         )
       )
     )
@@ -1097,7 +1223,7 @@
     (pin "2" (uuid 40feeece-82db-409e-8fb6-a9fa1cb01425))
     (pin "1" (uuid fa0b0d30-cc5d-4600-a64b-a14a679b0782))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/9665c677-0b50-4f2a-bdc6-f5e1c3cc96ed"
           (reference "C3") (unit 1)
         )
@@ -1123,7 +1249,7 @@
     (pin "1" (uuid a5f429eb-0ed6-4273-9d1f-9afc31fcec34))
     (pin "2" (uuid 1bfcb6a5-02a6-486c-9808-dc6846b07b5f))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/9665c677-0b50-4f2a-bdc6-f5e1c3cc96ed"
           (reference "R23") (unit 1)
         )

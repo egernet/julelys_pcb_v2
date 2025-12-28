@@ -1584,7 +1584,7 @@
     (stroke (width 0) (type default))
     (uuid 2d443729-c3ca-485e-974a-3dc7283e915f)
   )
-  (wire (pts (xy 276.86 77.47) (xy 276.86 83.82))
+  (wire (pts (xy 276.86 88.9) (xy 276.86 83.82))
     (stroke (width 0) (type default))
     (uuid 2d5e45a0-9266-40a2-b752-aa83fca60be8)
   )
@@ -2066,6 +2066,13 @@
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
   )
+  (global_label "5V_OPI" (shape input) (at 276.86 88.9 270) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify right))
+    (uuid 327ffb1f-3efc-42e6-85d8-3d8cc891d6af)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 276.86 96.0286 270)
+      (effects (font (size 1.27 1.27)) (justify right) hide)
+    )
+  )
   (global_label "DTR" (shape input) (at 135.89 143.51 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid 34c46980-8044-4904-9043-cabb5da43db5)
@@ -2134,6 +2141,13 @@
     (uuid a7790aec-6fc7-482d-94ee-38260c21ce32)
     (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 234.7467 68.58 0)
       (effects (font (size 1.27 1.27)) (justify right) hide)
+    )
+  )
+  (global_label "5V_OPI" (shape input) (at 186.69 96.52 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid aa9ffee7-f1ed-47d9-a276-a0d49107c65e)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 196.1462 96.52 0)
+      (effects (font (size 1.27 1.27)) (justify left) hide)
     )
   )
   (global_label "CS" (shape input) (at 241.3 66.04 180) (fields_autoplaced)
@@ -2210,7 +2224,7 @@
     )
     (pin "1" (uuid e7275d65-a984-480a-aa6a-2ead777e4d60))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "#PWR018") (unit 1)
         )
@@ -2275,7 +2289,7 @@
     (pin "14" (uuid 9f775277-8368-4dc5-88c7-e530d00b6329))
     (pin "16" (uuid cb1ffb3b-aa22-4708-a2ef-d89991eea05a))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "U5") (unit 1)
         )
@@ -2312,7 +2326,7 @@
     (pin "10" (uuid f1af103e-60ca-4aa4-8f7e-5849bc89d8ca))
     (pin "1" (uuid 442c6360-a20d-4464-aaea-fd2db264be91))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "J2") (unit 1)
         )
@@ -2338,7 +2352,7 @@
     (pin "1" (uuid 35f3e26c-876a-4f91-865c-64ad5e3e8fff))
     (pin "2" (uuid abb638c3-d30b-4f5b-a07a-34c1d1e33345))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "C9") (unit 1)
         )
@@ -2363,34 +2377,9 @@
     )
     (pin "1" (uuid 68dfa0ea-8ef1-47d5-a9b4-409607c78e23))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "#PWR012") (unit 1)
-        )
-      )
-    )
-  )
-
-  (symbol (lib_id "power:+5V") (at 276.86 77.47 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid 327ffb1f-3efc-42e6-85d8-3d8cc891d6af)
-    (property "Reference" "#PWR027" (at 276.86 81.28 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Value" "+5V" (at 276.86 72.39 0)
-      (effects (font (size 1.27 1.27)))
-    )
-    (property "Footprint" "" (at 276.86 77.47 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "" (at 276.86 77.47 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (pin "1" (uuid 5bb611a8-d508-44f0-be7d-5a8a72dc3cbf))
-    (instances
-      (project "Julelys V2"
-        (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
-          (reference "#PWR027") (unit 1)
         )
       )
     )
@@ -2420,7 +2409,7 @@
     (pin "1" (uuid e3f5dbb8-2bdf-4495-838e-f822313b9f26))
     (pin "2" (uuid 96f76ea3-8d85-46d9-97df-5fb03f3110f7))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "D4") (unit 1)
         )
@@ -2446,7 +2435,7 @@
     (pin "2" (uuid ac70e7ae-7929-454f-a843-a84373e7552a))
     (pin "1" (uuid 844eb395-909d-4fe2-b45f-e56d38f87e37))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "R7") (unit 1)
         )
@@ -2472,7 +2461,7 @@
     (pin "2" (uuid 60ff6cdd-2d4f-4b99-b1c0-1df5551a8f27))
     (pin "1" (uuid fa428ec7-b3fa-4971-9b12-71aa2657a4e1))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "R8") (unit 1)
         )
@@ -2497,7 +2486,7 @@
     )
     (pin "1" (uuid 650fa6c0-e4df-4069-a121-74efc930fd5f))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "#PWR019") (unit 1)
         )
@@ -2523,7 +2512,7 @@
     (pin "2" (uuid dd17aeb5-a93d-4369-bd24-c849404f9ebf))
     (pin "1" (uuid 1a559f0d-2aea-485e-9e4a-bee892cf09ad))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "R24") (unit 1)
         )
@@ -2548,7 +2537,7 @@
     )
     (pin "1" (uuid 8429035c-0807-44c9-a9f4-9082c1b22902))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "#PWR010") (unit 1)
         )
@@ -2573,7 +2562,7 @@
     )
     (pin "1" (uuid 83cf46e8-ebff-4543-ab0d-057c1210db8b))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "#PWR025") (unit 1)
         )
@@ -2598,7 +2587,7 @@
     )
     (pin "1" (uuid 211e084b-f1f2-449c-99ee-2c7dd4f683f7))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "#PWR030") (unit 1)
         )
@@ -2624,7 +2613,7 @@
     (pin "2" (uuid c8fb6394-f957-4477-b726-885a040ca371))
     (pin "1" (uuid a6561bde-f101-4895-9e80-60e4d4fa43ae))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "R25") (unit 1)
         )
@@ -2650,7 +2639,7 @@
     (pin "2" (uuid 0c77799c-54b7-425e-971e-5ff532e676c2))
     (pin "1" (uuid 84a90783-430a-4a60-8b80-2fb12c74a8bc))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "R22") (unit 1)
         )
@@ -2675,7 +2664,7 @@
     )
     (pin "1" (uuid c30ed9d3-d2d8-4f97-a6b2-f518868242ee))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "#PWR08") (unit 1)
         )
@@ -2700,7 +2689,7 @@
     )
     (pin "1" (uuid faeef09b-ec6e-4eb8-bf77-71c7baf08542))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "#PWR029") (unit 1)
         )
@@ -2728,7 +2717,7 @@
     (pin "4" (uuid 8a92589f-980b-4a08-b3f0-22f398b725fb))
     (pin "3" (uuid ff0a634e-e2ef-4055-bae6-6e524056bf8a))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "D7") (unit 1)
         )
@@ -2778,34 +2767,9 @@
     (pin "20" (uuid bb4fffcf-5cce-4446-bb79-ec2806798365))
     (pin "18" (uuid 3cd0fd1f-319e-49a7-8a20-8f1b823d7c20))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "J1") (unit 1)
-        )
-      )
-    )
-  )
-
-  (symbol (lib_id "power:+5V") (at 186.69 96.52 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid a09f1b86-f3f2-4ea6-bf84-11167d329042)
-    (property "Reference" "#PWR028" (at 186.69 100.33 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Value" "+5V" (at 186.69 91.44 0)
-      (effects (font (size 1.27 1.27)))
-    )
-    (property "Footprint" "" (at 186.69 96.52 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "" (at 186.69 96.52 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (pin "1" (uuid f2a2c72f-edfc-4f23-a663-2c008571a0a0))
-    (instances
-      (project "Julelys V2"
-        (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
-          (reference "#PWR028") (unit 1)
         )
       )
     )
@@ -2828,7 +2792,7 @@
     )
     (pin "1" (uuid efa025ef-0318-4525-b77e-91c653fc3631))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "#PWR026") (unit 1)
         )
@@ -2854,7 +2818,7 @@
     (pin "2" (uuid f31b52ad-1563-421d-8b7c-396f6fee1a4e))
     (pin "1" (uuid 6e2ca6fd-f768-46de-aba6-8decbf495b7c))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "C10") (unit 1)
         )
@@ -2880,7 +2844,7 @@
     (pin "1" (uuid c6e13c88-e605-47b4-89db-577565568f9f))
     (pin "2" (uuid a49948d9-6289-4937-bbe6-e42c789a3212))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "R10") (unit 1)
         )
@@ -2921,7 +2885,7 @@
     (pin "A8" (uuid 57590e27-643d-4916-99eb-71291efbdcfc))
     (pin "B6" (uuid fd15a3bd-a081-4b66-960d-0f3d97004858))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "P1") (unit 1)
         )
@@ -2946,7 +2910,7 @@
     )
     (pin "1" (uuid 3e2e3544-3145-48dc-9e22-355a74a4a8ee))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "#PWR020") (unit 1)
         )
@@ -2973,7 +2937,7 @@
     (pin "1" (uuid 398c733b-7629-496e-8d5d-b30736bca9c2))
     (pin "3" (uuid 66dda626-8032-440b-bb17-fb7a4e48396a))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "J12") (unit 1)
         )
@@ -3009,7 +2973,7 @@
     (pin "10" (uuid 872fc02e-ae03-40e2-8595-93444365b6c5))
     (pin "2" (uuid d5e57b28-2160-486a-a3dd-e8d4d336a37c))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "J3") (unit 1)
         )
@@ -3035,7 +2999,7 @@
     (pin "2" (uuid e2ec1434-e96b-4a7a-93ac-8c804cbe953e))
     (pin "1" (uuid d6dc19fe-4c4f-44d6-b5fa-992eea2c78ee))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "R9") (unit 1)
         )
@@ -3060,7 +3024,7 @@
     )
     (pin "1" (uuid e3337d09-0b56-4505-92c7-22aceb60f2f3))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "#PWR024") (unit 1)
         )
@@ -3085,7 +3049,7 @@
     )
     (pin "1" (uuid 6f8b3f2b-c0bc-4c0f-a0f9-c8502418ac6a))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "#PWR023") (unit 1)
         )
@@ -3110,7 +3074,7 @@
     )
     (pin "1" (uuid 82b06826-6921-4377-b539-18d2324cf667))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "#PWR022") (unit 1)
         )
@@ -3136,7 +3100,7 @@
     (pin "1" (uuid 18e7d2e0-f624-4132-bb13-6bb4c32d56a9))
     (pin "2" (uuid 7c3ab8bb-40d1-4855-b2a7-4237be6c7cbc))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/1969c3e8-6100-4b45-a4c4-adbf98ab0c9d"
           (reference "R11") (unit 1)
         )

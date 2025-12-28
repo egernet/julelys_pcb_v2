@@ -5,6 +5,32 @@
   (paper "A4")
 
   (lib_symbols
+    (symbol "Connector:TestPoint" (pin_numbers hide) (pin_names (offset 0.762) hide) (in_bom yes) (on_board yes)
+      (property "Reference" "TP" (at 0 6.858 0)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "Value" "TestPoint" (at 0 5.08 0)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "Footprint" "" (at 5.08 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "Datasheet" "~" (at 5.08 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (symbol "TestPoint_0_1"
+        (circle (center 0 3.302) (radius 0.762)
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+      )
+      (symbol "TestPoint_1_1"
+        (pin passive line (at 0 0 90) (length 2.54)
+          (name "1" (effects (font (size 1.27 1.27))))
+          (number "1" (effects (font (size 1.27 1.27))))
+        )
+      )
+    )
     (symbol "Device:C" (pin_numbers hide) (pin_names (offset 0.254)) (in_bom yes) (on_board yes)
       (property "Reference" "C" (at 0.635 2.54 0)
         (effects (font (size 1.27 1.27)) (justify left))
@@ -115,6 +141,71 @@
         )
         (pin passive line (at 0 -3.81 90) (length 3.302)
           (name "~" (effects (font (size 1.27 1.27))))
+          (number "2" (effects (font (size 1.27 1.27))))
+        )
+      )
+    )
+    (symbol "Device:D_Schottky" (pin_numbers hide) (pin_names (offset 1.016) hide) (in_bom yes) (on_board yes)
+      (property "Reference" "D" (at 0 2.54 0)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "Value" "D_Schottky" (at 0 -2.54 0)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "Footprint" "" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "Datasheet" "~" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_keywords" "diode Schottky" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_description" "Schottky diode" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (symbol "D_Schottky_0_1"
+        (polyline
+          (pts
+            (xy 1.27 0)
+            (xy -1.27 0)
+          )
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts
+            (xy 1.27 1.27)
+            (xy 1.27 -1.27)
+            (xy -1.27 0)
+            (xy 1.27 1.27)
+          )
+          (stroke (width 0.254) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts
+            (xy -1.905 0.635)
+            (xy -1.905 1.27)
+            (xy -1.27 1.27)
+            (xy -1.27 -1.27)
+            (xy -0.635 -1.27)
+            (xy -0.635 -0.635)
+          )
+          (stroke (width 0.254) (type default))
+          (fill (type none))
+        )
+      )
+      (symbol "D_Schottky_1_1"
+        (pin passive line (at -3.81 0 0) (length 2.54)
+          (name "K" (effects (font (size 1.27 1.27))))
+          (number "1" (effects (font (size 1.27 1.27))))
+        )
+        (pin passive line (at 3.81 0 180) (length 2.54)
+          (name "A" (effects (font (size 1.27 1.27))))
           (number "2" (effects (font (size 1.27 1.27))))
         )
       )
@@ -609,6 +700,15 @@
   (junction (at 114.3 111.76) (diameter 0) (color 0 0 0 0)
     (uuid 862c003b-172d-4bdd-b22b-7101b7838596)
   )
+  (junction (at 243.84 41.91) (diameter 0) (color 0 0 0 0)
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcdfa)
+  )
+  (junction (at 254 41.91) (diameter 0) (color 0 0 0 0)
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcdfb)
+  )
+  (junction (at 248.92 58.42) (diameter 0) (color 0 0 0 0)
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcdfc)
+  )
   (junction (at 114.3 86.36) (diameter 0) (color 0 0 0 0)
     (uuid a9af07fa-4635-41a9-95ec-36f076780948)
   )
@@ -746,9 +846,53 @@
     (stroke (width 0) (type default))
     (uuid 9c9fb787-ba47-4193-b599-da4c55c6a7c9)
   )
+  (wire (pts (xy 215.9 41.91) (xy 223.52 41.91))
+    (stroke (width 0) (type default))
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcdf0)
+  )
+  (wire (pts (xy 231.14 41.91) (xy 243.84 41.91))
+    (stroke (width 0) (type default))
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcdf1)
+  )
+  (wire (pts (xy 243.84 41.91) (xy 243.84 45.72))
+    (stroke (width 0) (type default))
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcdf2)
+  )
+  (wire (pts (xy 243.84 41.91) (xy 254 41.91))
+    (stroke (width 0) (type default))
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcdf3)
+  )
+  (wire (pts (xy 254 41.91) (xy 254 45.72))
+    (stroke (width 0) (type default))
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcdf4)
+  )
+  (wire (pts (xy 254 41.91) (xy 264.16 41.91))
+    (stroke (width 0) (type default))
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcdf5)
+  )
+  (wire (pts (xy 243.84 53.34) (xy 243.84 58.42))
+    (stroke (width 0) (type default))
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcdf6)
+  )
+  (wire (pts (xy 243.84 58.42) (xy 248.92 58.42))
+    (stroke (width 0) (type default))
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcdf7)
+  )
+  (wire (pts (xy 254 53.34) (xy 254 58.42))
+    (stroke (width 0) (type default))
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcdf8)
+  )
+  (wire (pts (xy 248.92 58.42) (xy 254 58.42))
+    (stroke (width 0) (type default))
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcdf9)
+  )
   (wire (pts (xy 180.34 111.76) (xy 180.34 127))
     (stroke (width 0) (type default))
     (uuid ab1f1f95-58a0-4cf3-a4fb-d326c64bc783)
+  )
+  (wire (pts (xy 113.03 41.91) (xy 120.65 41.91))
+    (stroke (width 0) (type default))
+    (uuid b1b2c3d4-e5f6-7890-abcd-ef1234567823)
   )
   (wire (pts (xy 157.48 115.57) (xy 157.48 129.54))
     (stroke (width 0) (type default))
@@ -807,6 +951,12 @@
     (uuid fdd348be-4219-4e5f-8ebb-9e18f6621432)
   )
 
+  (text "Orange Pi Power Protection\n5V -> Diode -> Capacitor -> Orange Pi\nPrevents LED current from draining OPi supply"
+    (at 220.98 30.48 0)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcde1)
+  )
+
   (global_label "IO9" (shape input) (at 120.65 111.76 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid 19e1c0eb-7812-4254-8109-bb4d665891c9)
@@ -842,6 +992,13 @@
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
   )
+  (global_label "5V_OPI" (shape output) (at 264.16 41.91 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcdef)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 272.0586 41.91 0)
+      (effects (font (size 1.27 1.27)) (justify left) hide)
+    )
+  )
   (global_label "CHIP_UP" (shape input) (at 120.65 86.36 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid f4120de3-1610-49da-a578-6669e566e83f)
@@ -866,7 +1023,7 @@
       (effects (font (size 1.27 1.27)) hide)
     )
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "H1") (unit 1)
         )
@@ -892,7 +1049,7 @@
     (pin "1" (uuid a45d72c3-ab9b-4c59-9814-2652bf3b6b2e))
     (pin "2" (uuid 767ba358-ffc4-4c5d-8b6e-f5f7b3dffb69))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "C4") (unit 1)
         )
@@ -917,7 +1074,7 @@
     )
     (pin "1" (uuid 7d67d690-d863-4b53-8d89-4e427fdf4284))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "#PWR09") (unit 1)
         )
@@ -943,7 +1100,7 @@
     (pin "2" (uuid cd2c0f8c-7b89-476e-998d-790d8ab615a1))
     (pin "1" (uuid 8f0065ff-b59b-4d0b-af42-397b564a2867))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "SW2") (unit 1)
         )
@@ -968,7 +1125,7 @@
     )
     (pin "1" (uuid 6ceb1499-fc97-4c9f-856f-a2b1842b49c6))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "#PWR016") (unit 1)
         )
@@ -992,7 +1149,7 @@
       (effects (font (size 1.27 1.27)) hide)
     )
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "H2") (unit 1)
         )
@@ -1018,7 +1175,7 @@
     (pin "2" (uuid 49570827-7d69-43a0-a4c0-6ecc6c2009e4))
     (pin "1" (uuid 226d49e4-d998-4362-8e48-2360fa81f969))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "R13") (unit 1)
         )
@@ -1044,7 +1201,7 @@
     (pin "1" (uuid f7906fc4-4d0b-4df2-804d-60d3880a9a62))
     (pin "2" (uuid afc96273-7422-474d-b850-277334e97ad5))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "C5") (unit 1)
         )
@@ -1070,7 +1227,7 @@
     (pin "2" (uuid 2ce4be9f-a335-4701-a006-40d3410ebdb9))
     (pin "1" (uuid abfdf29c-3b44-4078-9d2f-77f99e086559))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "R12") (unit 1)
         )
@@ -1094,7 +1251,7 @@
       (effects (font (size 1.27 1.27)) hide)
     )
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "H4") (unit 1)
         )
@@ -1119,7 +1276,7 @@
     )
     (pin "1" (uuid 537a3ed8-0ad4-4af5-81a2-3eedbf6dbb81))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "#PWR013") (unit 1)
         )
@@ -1145,9 +1302,137 @@
     (pin "2" (uuid e07a6887-b11c-4bc5-ab70-876301edea7b))
     (pin "1" (uuid af642acd-3fc8-4f88-b08f-8b6ef9bdf76b))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "R5") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "power:+5V") (at 215.9 41.91 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcde2)
+    (property "Reference" "#PWR0102" (at 215.9 45.72 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+5V" (at 215.9 36.83 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "" (at 215.9 41.91 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 215.9 41.91 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid a1b2c3d4-e5f6-7890-1234-567890abcde3))
+    (instances
+      (project "Julelys"
+        (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
+          (reference "#PWR0102") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "Device:D_Schottky") (at 227.33 41.91 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcde4)
+    (property "Reference" "D6" (at 227.33 36.83 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Value" "SS34" (at 227.33 39.37 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "Diode_SMD:D_SMC" (at 227.33 41.91 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "~" (at 227.33 41.91 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid a1b2c3d4-e5f6-7890-1234-567890abcde5))
+    (pin "2" (uuid a1b2c3d4-e5f6-7890-1234-567890abcde6))
+    (instances
+      (project "Julelys"
+        (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
+          (reference "D6") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "Device:C_Polarized_US") (at 243.84 49.53 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcde7)
+    (property "Reference" "C8" (at 247.65 48.26 0)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Value" "470uF" (at 247.65 50.8 0)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Footprint" "Capacitor_SMD:CP_Elec_8x10" (at 243.84 49.53 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "~" (at 243.84 49.53 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid a1b2c3d4-e5f6-7890-1234-567890abcde8))
+    (pin "2" (uuid a1b2c3d4-e5f6-7890-1234-567890abcde9))
+    (instances
+      (project "Julelys"
+        (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
+          (reference "C8") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "Device:C") (at 254 49.53 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcdea)
+    (property "Reference" "C9" (at 257.81 48.26 0)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Value" "100nF" (at 257.81 50.8 0)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric" (at 254.9652 53.34 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "~" (at 254 49.53 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid a1b2c3d4-e5f6-7890-1234-567890abcdeb))
+    (pin "2" (uuid a1b2c3d4-e5f6-7890-1234-567890abcdec))
+    (instances
+      (project "Julelys"
+        (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
+          (reference "C9") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "power:GND") (at 248.92 58.42 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid a1b2c3d4-e5f6-7890-1234-567890abcded)
+    (property "Reference" "#PWR0101" (at 248.92 64.77 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "GND" (at 248.92 63.5 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "" (at 248.92 58.42 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 248.92 58.42 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid a1b2c3d4-e5f6-7890-1234-567890abcdee))
+    (instances
+      (project "Julelys"
+        (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
+          (reference "#PWR0101") (unit 1)
         )
       )
     )
@@ -1175,9 +1460,34 @@
     (pin "3" (uuid a12309c5-947d-4b9d-9c38-bf301b3bab5e))
     (pin "4" (uuid b83cdb78-55bd-4cd0-bbfa-93eb8957b1b7))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "U4") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "Connector:TestPoint") (at 120.65 41.91 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid b1b2c3d4-e5f6-7890-abcd-ef1234567803)
+    (property "Reference" "TP3" (at 120.65 35.56 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Value" "3.3V" (at 120.65 38.1 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "TestPoint:TestPoint_Pad_1.0x1.0mm" (at 125.73 41.91 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "~" (at 125.73 41.91 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid b1b2c3d4-e5f6-7890-abcd-ef1234567813))
+    (instances
+      (project "Julelys"
+        (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
+          (reference "TP3") (unit 1)
         )
       )
     )
@@ -1200,7 +1510,7 @@
     )
     (pin "1" (uuid ae333607-b2ef-4911-ba84-2635a8bb633a))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "#PWR011") (unit 1)
         )
@@ -1226,7 +1536,7 @@
     (pin "1" (uuid a94bd5f2-a85f-41f6-a486-50972410214b))
     (pin "2" (uuid 915959f1-7919-4a0f-b31f-2321d34b6def))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "C7") (unit 1)
         )
@@ -1251,7 +1561,7 @@
     )
     (pin "1" (uuid 7609e240-89fc-4d97-a7d3-1fece97cf103))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "#PWR014") (unit 1)
         )
@@ -1277,7 +1587,7 @@
     (pin "1" (uuid b235d4ac-a4d6-4478-b2e5-9dcb95ee71a5))
     (pin "2" (uuid 305d3630-b09e-4d21-ae3a-eed609b151fb))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "D5") (unit 1)
         )
@@ -1302,7 +1612,7 @@
     )
     (pin "1" (uuid af6baba6-417e-462f-aa49-5c54e5ef71ab))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "#PWR017") (unit 1)
         )
@@ -1327,7 +1637,7 @@
     )
     (pin "1" (uuid a741e081-f825-43cd-854b-9f322ca698b8))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "#PWR015") (unit 1)
         )
@@ -1353,7 +1663,7 @@
     (pin "2" (uuid 8425a017-d773-48df-9a2d-bd37020e64f9))
     (pin "1" (uuid bc8c6197-832c-468b-95f7-a6cd4a8ba006))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "SW1") (unit 1)
         )
@@ -1379,7 +1689,7 @@
     (pin "1" (uuid 67bd8458-bace-455a-91f6-a197ea378925))
     (pin "2" (uuid 99b6795b-bd10-4522-8720-b2f111a4c406))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "C6") (unit 1)
         )
@@ -1403,7 +1713,7 @@
       (effects (font (size 1.27 1.27)) hide)
     )
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "H3") (unit 1)
         )
@@ -1430,7 +1740,7 @@
     (pin "2" (uuid f751e0eb-3ed0-4839-92cd-4aa5457c83f3))
     (pin "1" (uuid f956cbd2-296c-48ef-bf5d-579120574423))
     (instances
-      (project "Julelys V2"
+      (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "U3") (unit 1)
         )

@@ -1,0 +1,28 @@
+(version 1)
+# JLCPCB capabilities, 4-layer, 1 oz outer / 1 oz inner
+# https://jlcpcb.com/capabilities/pcb-capabilities
+
+(rule "JLC PTH hole to track"
+	(condition "A.Type == 'Pad' && A.isPlated() && B.Type == 'Track'")
+	(constraint hole_clearance (min 0.28mm)))
+
+(rule "JLC NPTH hole to copper"
+	(condition "A.Type == 'Pad' && !A.isPlated()")
+	(constraint hole_clearance (min 0.2mm)))
+
+(rule "JLC pad hole to pad hole"
+	(condition "A.Type == 'Pad' && B.Type == 'Pad'")
+	(constraint hole_to_hole (min 0.45mm)))
+
+(rule "JLC via hole to via hole"
+	(condition "A.Type == 'Via' && B.Type == 'Via'")
+	(constraint hole_to_hole (min 0.2mm)))
+
+(rule "JLC SMD pad to pad"
+	(condition "A.Type == 'Pad' && B.Type == 'Pad' && A.Net != B.Net")
+	(constraint clearance (min 0.15mm)))
+
+(rule "JLC silkscreen to pad"
+	(layer outer)
+	(condition "A.Type == 'Pad'")
+	(constraint silk_clearance (min 0.15mm)))

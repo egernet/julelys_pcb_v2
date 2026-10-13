@@ -243,12 +243,43 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
   the terminals to the JST pins. The Pi's 5V (J1 pins 2/4) is fed only through
   the In2 +5V plane. A track around the left end of J1 would cross the
   mounting-hole land. 2 oz outer copper is recommended.
-- **Status:** autorouted with Freerouting. Before ordering:
-  - Route the 5 remaining connections by hand in KiCad, with the interactive
-    router in shove mode: TXD and IO6 at the ESP32 (U1 pins 12 and 5), USB_TX
-    (U5 pin 26 to R26), and VBUS at P1 A4/A9.
-  - Move 3 FAN_N tracks away from the right board edge.
-  - Clean up the silkscreen.
+- **Status:** autorouted draft, to be finished by hand in KiCad with the
+  interactive router in shove mode:
+  - Place the new parts. C18-C21 and R35/R36 sit outside the board outline,
+    on the right. Put C18-C21 at the VCC pins (pin 5) of U6-U9.
+  - Move the decoupling caps that ended up too far from their IC: C2/C3 at U1
+    pin 1, C5 at the U3 output, C8 at U2 pin 16, C16 at J1 pins 2/4. The
+    autoplacer put them 4-14 mm away; aim for under 2 mm.
+  - Route the 5 old connections: TXD and IO6 at U1, USB_TX (U5 pin 26 to R26),
+    and VBUS at P1 A4/A9. R10 sits right above U5 pins 25/26 and blocks their
+    escape, so move it first.
+  - Move 3 FAN_N tracks away from the right edge.
+  - Clean up the front silkscreen.
+  An automatic re-placement with the caps pinned to the IC pins was tried. It
+  left 19 connections unrouted and routed 13 of them badly (20-40 mm with 8
+  vias), so it was dropped.
+- **Schematic review fixes (Codex review):**
+  - R35 10k pulls GPIO2 (a strapping pin) up. The Pi's MISO has a default
+    pull-down.
+  - R36 10k pulls IO7 (LED data) down, so the LEDs do not flash while the ESP32
+    boots.
+  - C5 is 22uF for AMS1117 stability.
+  - C7 on IO9 is 1nF. Espressif advises against large caps on GPIO9.
+  - C18-C21 are 100nF decoupling caps for the level shifters U6-U9.
+  Known and accepted: JST-XH is rated 3 A per pin against 3.3 A for a full-white
+  string, with no per-string fuse (limit brightness in firmware). USB VBUS feeds
+  +5V through D4 (1 A), so program over USB without LED load.
+- **Fab rules:** JLCPCB 4-layer, 1 oz outer / 1 oz inner
+  (https://jlcpcb.com/capabilities/pcb-capabilities). The limits are in
+  `Julelys.kicad_pro` and `Julelys.kicad_dru`:
+  - min track and space 0.1 mm
+  - via annular ring at least 0.15 mm (0.6/0.3 vias; 0.7/0.3 gives the
+    recommended 0.2)
+  - PTH hole to track 0.28 mm, pad hole to hole 0.45 mm
+  - copper to edge 0.3 mm
+  - silkscreen text at least 1.0 mm high and 0.15 mm thick, 0.15 mm from pads
+  2 oz outer copper would need 0.8 mm vias (annular ring 0.254), which do not
+  fit around U5/U1.
 - **Cooling and mechanics:** a Pi 5 uses the official Active Cooler under the
   HAT, driven by the Pi itself. Mount the HAT with a GPIO stacking extension and
   about 16-18 mm standoffs. The standard 8.5 mm socket height does not clear the

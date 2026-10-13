@@ -496,10 +496,6 @@
       {
         "netclass": "Supply3V3",
         "pattern": "+3.3V"
-      },
-      {
-        "netclass": "Supply3V3",
-        "pattern": "/Power/FAN_N"
       }
     ]
   },

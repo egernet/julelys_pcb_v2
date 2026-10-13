@@ -111,8 +111,8 @@ All pins not listed are no-connect.
 | 10 | GPIO15 (RXD) | PI_RX | ESP32 TX (GPIO 21) |
 | 29 | GPIO5 | PI_EN | ESP32 EN (CHIP_UP), via R28 1k |
 | 31 | GPIO6 | PI_BOOT | ESP32 GPIO 9, via R29 1k |
-| 12 | GPIO18 (PWM0) | FAN_PWM | Fan MOSFET gate |
-| 18 | GPIO24 | FAN_TACH | Fan tach, pull-up to 3V3 |
+| 37 | GPIO26 | PI_GPIO26 | ESP32 GPIO 0 via R37 1k (spare line) |
+| 36 | GPIO16 | PI_GPIO16 | ESP32 GPIO 1 via R38 1k (spare line) |
 | 27, 28 | ID_SD / ID_SC | - | Reserved for the HAT ID EEPROM, do not use |
 
 Notes:
@@ -122,6 +122,15 @@ Notes:
 - ESP32 RX has two drivers, the Pi and the CP2102N (`USB_TX`). U10 (74LVC1G08)
   ANDs them, with R26/R27 10k pull-ups, so either one can talk to the ESP32.
 - IO9 now has an external pull-up (R30 10k). It had none before.
+- The spare lines (IO0/IO1 to Pi GPIO26/16) are free for interrupt or handshake
+  use. The 1k resistors protect against both sides driving at once. IO0/IO1 are
+  not strapping pins.
+- **Dev board use without a Pi:** J1 (the socket on the bottom) doubles as the
+  ESP32 header, used with male dupont wires. It carries SPI (IO6/2/3/10 on pins
+  19/21/23/24), TXD (pin 10), RXD (pin 8, through U10), EN/BOOT (29/31, 1k),
+  IO0/IO1 (37/36, 1k), 5V (2/4) and GND. IO4/5/8 (mux select) and IO7 (LED data)
+  are used on the board and can be probed on the test points. This replaces the
+  v3.1 debug header J3, which was removed in v4.
 - Pi 4: GPIO14/15 is the Linux console by default. Disable the console and set
   `enable_uart=1`. Pi 5 has a separate debug UART, so GPIO14/15 is free.
 
@@ -130,10 +139,8 @@ Notes:
 | Reference | Type | Function |
 |-----------|------|----------|
 | J1 | 2x20 Pin Socket | Raspberry Pi 40-pin GPIO header |
-| J3 | 2x6 Pin Header | Debug/programming |
 | J4-J11 | JST B3B-XH-A (x8) | LED strip outputs (5V, Data, GND) |
 | J12 | 1x3 Pin Header | Auxiliary connector |
-| J13 | 1x3 Pin Header | Fan (FAN-, +5V, tach) |
 | P1 | USB-C | Power + programming |
 | V_IN1, V_IN2 | Screw Terminal (x2) | External 5V input (parallel, ~20A total) |
 
@@ -192,12 +199,9 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
   restarts from the outline; the v3.1 layout is in git history (`0ffda38`) and
   `Julelys-backups/`.
 - **Pi powered from the HAT**, with no diode (see Power).
-- **Fan control** (`power.kicad_sch`): J13 3-pin header (1 = FAN-, 2 = +5V,
-  3 = tach). Q1 AO3400A switches the low side. R31 100R is the gate resistor
-  from FAN_PWM (GPIO18), R32 100k the gate pull-down, D8 the flyback diode, and
-  R33 10k pulls tach up to 3V3. Use the `pwm-fan`/`gpio-fan` overlay on the Pi.
-  Tach readings are unreliable while PWM is switching. The HAT covers the Pi 5's
-  own fan connector.
+- **No fan control:** the Pi 5 drives its own Active Cooler. The J13/Q1 fan
+  circuit from the first v4 draft was removed, and Pi GPIO18/24 are free.
+- **J3 removed:** J1 doubles as the dev header (see the J1 table).
 - **Pi can flash the ESP32** over UART plus EN/BOOT (see the J1 table), so no
   buttons are needed. CP2102N/USB-C stays for debugging.
 - **Auto-reset fixed.** On v3.1 the U4 collectors were swapped, so EN went to
@@ -208,13 +212,14 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
   for download mode, but the LED and 270R pulled it towards about 1.8V. D1-D3
   now hang off the 5V side (`AS0`-`AS2`, after the level shifters), with
   R1-R3 = 1k.
-- **Test points** (TP1-TP33, footprint `TestPoint_Pad_1.0x1.0mm`):
+- **Test points** (footprint `TestPoint_Pad_1.0x1.0mm`), almost all on the
+  **bottom side** to free space on top. Probe them with the HAT off the Pi.
+  TP9 (IO9) and TP10 (RXD) stay on top.
   - Power: +5V (TP1), 3V3 (TP3), VBUS (TP18), GND (TP2, TP19-21).
   - SPI: TP4-7.
   - ESP32: EN (TP8), BOOT/IO9 (TP9), RXD (TP10), TXD (TP11), LED data at GPIO7
     (TP12), PI_TX (TP13), USB_TX (TP14).
-  - Fan: FAN_PWM (TP15), FAN_TACH (TP16), FAN- (TP17).
-  - LED path: mux data input (TP22), mux select AS0-AS2 (TP23-25), and all 8
+  - LED path: mux data input (TP22), mux select AS0-AS2 (TP23-25), and the
     string outputs CH1-CH8 (TP26-33).
 - **Power LEDs:** D5 on 5V (existing) and D9 on 3V3 (with R34 1k).
 
@@ -243,21 +248,20 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
   the terminals to the JST pins. The Pi's 5V (J1 pins 2/4) is fed only through
   the In2 +5V plane. A track around the left end of J1 would cross the
   mounting-hole land. 2 oz outer copper is recommended.
-- **Status:** autorouted draft, to be finished by hand in KiCad with the
-  interactive router in shove mode:
-  - Place the new parts. C18-C21 and R35/R36 sit outside the board outline,
-    on the right. Put C18-C21 at the VCC pins (pin 5) of U6-U9.
-  - Move the decoupling caps that ended up too far from their IC: C2/C3 at U1
-    pin 1, C5 at the U3 output, C8 at U2 pin 16, C16 at J1 pins 2/4. The
-    autoplacer put them 4-14 mm away; aim for under 2 mm.
-  - Route the 5 old connections: TXD and IO6 at U1, USB_TX (U5 pin 26 to R26),
-    and VBUS at P1 A4/A9. R10 sits right above U5 pins 25/26 and blocks their
-    escape, so move it first.
-  - Move 3 FAN_N tracks away from the right edge.
-  - Clean up the front silkscreen.
-  An automatic re-placement with the caps pinned to the IC pins was tried. It
-  left 19 connections unrouted and routed 13 of them badly (20-40 mm with 8
-  vias), so it was dropped.
+- **Status:** 0 DRC errors (JLCPCB rules) and 0 ERC errors. 6 connections still
+  need routing by hand in KiCad (interactive router, shove mode):
+  - A2 at U9 pin 2
+  - IO2 at R35 (two links)
+  - /MCH4 from R17 to U2 pin 12
+  - USB_TX from U5 pin 26 to TP14
+  - GND on C20 pin 2, which needs a via to the plane
+  The spare lines PI_GPIO26/16 are routed but long (about 60 mm, 8-9 vias). The
+  ESP32's IO0/IO1 pins sit at the bottom of the module and J1 at the top.
+- **Decoupling distances** (cap pad to IC power pin): C19 1.7, C20 1.1, C21 2.4,
+  C5 2.3, C3 3.8, C2 4.4, C8 4.0, C18 4.5, C16 5.2 mm. The board is full; getting
+  closer means moving ICs. U8 was nudged 1.3 mm to make room for C19, and R23
+  was moved to make room for C20. A 74AHCT125 quad buffer (TSSOP-14) was tried
+  to replace U6-U9, but there was no 7.8 x 5.6 mm free spot near the mux.
 - **Schematic review fixes (Codex review):**
   - R35 10k pulls GPIO2 (a strapping pin) up. The Pi's MISO has a default
     pull-down.
@@ -283,8 +287,8 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
 - **Cooling and mechanics:** a Pi 5 uses the official Active Cooler under the
   HAT, driven by the Pi itself. Mount the HAT with a GPIO stacking extension and
   about 16-18 mm standoffs. The standard 8.5 mm socket height does not clear the
-  cooler, and the through-hole pins of the JST block sit above it. J13 stays for
-  a case fan. There is no room for a fan on the HAT itself.
+  cooler, and the through-hole pins of the JST block sit above it. There is no
+  fan control on the HAT.
 - **Screw terminals:** V_IN1/V_IN2 point their 45-degree wire entry at the left
   board edge. The footprint is rotated 270 degrees and the symbol is mirrored,
   so pin 1 = +5V and pin 2 = GND (the opposite of v3.1). A 2-pole terminal is

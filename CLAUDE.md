@@ -241,8 +241,19 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
     (U5 pin 26 to R26), and VBUS at P1 A4/A9.
   - Move 3 FAN_N tracks away from the right board edge.
   - Clean up the silkscreen.
-- **Mechanical:** a Pi 5 with the Active Cooler needs taller standoffs than a
-  standard HAT.
+- **Cooling and mechanics:** a Pi 5 uses the official Active Cooler under the
+  HAT, driven by the Pi itself. Mount the HAT with a GPIO stacking extension and
+  about 16-18 mm standoffs. The standard 8.5 mm socket height does not clear the
+  cooler, and the through-hole pins of the JST block sit above it. J13 stays for
+  a case fan. There is no room for a fan on the HAT itself.
+- **Screw terminals:** V_IN1/V_IN2 point their 45-degree wire entry at the left
+  board edge. The footprint is rotated 270 degrees and the symbol is mirrored,
+  so pin 1 = +5V and pin 2 = GND (the opposite of v3.1). A 2-pole terminal is
+  symmetric, so this only changes which screw is which.
+- **3D models:** every physical part has one. Library parts use
+  `${KICAD10_3DMODEL_DIR}`. HRO USB-C, ESP32, CP2102N, BC847 and JST models live
+  in the project (`3D/` and the part folders). Test points and mounting holes
+  have none.
 - **Tools:** KiCad 10 (`kicad-cli sch erc`, `kicad-cli pcb drc`). The board
   file is in KiCad 10 format. The schematics are still in KiCad 7 format until
   they are saved from KiCad 10.

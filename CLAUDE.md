@@ -220,6 +220,13 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
 
 ## v4 Layout (first draft)
 
+- **HAT mechanical spec** (raspberrypi/hats `hat-board-mechanical.pdf`): the
+  board is 65 x 56.0 mm, because 56.5 mm applies only to an SMT GPIO header. It
+  has 3 mm corner radii. The mounting holes are 2.75 mm NPTH, 58 x 49 mm apart
+  and 3.5 mm from the edges. Each hole has a keepout zone of 6.4 mm diameter on
+  all copper layers (spec: land at least 6.2 mm, not connected to GND). The
+  optional camera and display flex cutouts are left out, because the ESP32 and
+  the power input sit there.
 - **Stackup:** 4 layers. F.Cu and B.Cu carry signals with a GND pour, In1.Cu is
   a solid GND plane, and In2.Cu is a solid +5V plane. All free copper is GND,
   stitched with vias. 2 layers was tried and dropped: routing did not complete,
@@ -233,8 +240,9 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
   - The address LEDs D1-D3 are in one row above U2. The power LEDs D5/D9 are
     next to the power input.
 - **High current:** locked 2 mm tracks, +5V on F.Cu and GND on B.Cu, run from
-  the terminals to the JST pins. A 1 mm +5V track on both layers runs around the
-  left end of J1 to Pi pins 2/4. 2 oz outer copper is recommended.
+  the terminals to the JST pins. The Pi's 5V (J1 pins 2/4) is fed only through
+  the In2 +5V plane. A track around the left end of J1 would cross the
+  mounting-hole land. 2 oz outer copper is recommended.
 - **Status:** autorouted with Freerouting. Before ordering:
   - Route the 5 remaining connections by hand in KiCad, with the interactive
     router in shove mode: TXD and IO6 at the ESP32 (U1 pins 12 and 5), USB_TX

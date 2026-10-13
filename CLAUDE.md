@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 
 Julelys is a complete smart Christmas light system consisting of three components:
-1. **julelys_pcb** (this repo) - KiCad HAT PCB for Raspberry Pi 3/4/5
+1. **julelys_pcb** (this repo) - KiCad HAT PCB for Raspberry Pi 4/5
 2. **julelys_manager** - Swift control software (runs on Raspberry Pi/Mac)
 3. **julelys_esp32** - ESP32-C3 firmware (SPI slave)
 
@@ -14,7 +14,7 @@ The system drives a **440 SK6812 RGBW LED matrix (8x55)** and supports AI contro
 ## System Architecture
 
 ```
-Claude AI ──► Mac (julelys_manager) ──► Raspberry Pi 3/4/5
+Claude AI ──► Mac (julelys_manager) ──► Raspberry Pi 4/5  
                     MCP/SSH                    │
                                                │ SPI0 @ 2.5 Mbps
                                                ▼
@@ -45,8 +45,8 @@ Claude AI ──► Mac (julelys_manager) ──► Raspberry Pi 3/4/5
 **Schematics:**
 - `Julelys.kicad_sch` - Top-level (multiplexer, level shifters, connectors)
 - `esp32.kicad_sch` - ESP32-C3-WROOM-02 and decoupling
-- `power.kicad_sch` - AMS1117-3.3V regulator, auto-reset circuit, status LED, RPi power protection
-- `untitled.kicad_sch` - USB-C, CP2102N, JST connectors, RPi GPIO header
+- `power.kicad_sch` - AMS1117-3.3V regulator, status LED, RPi power
+- `untitled.kicad_sch` - USB-C, CP2102N, auto-reset, JST connectors, RPi GPIO header
 
 **Layout:**
 - `Julelys.kicad_pcb` - Main PCB layout
@@ -71,8 +71,9 @@ Claude AI ──► Mac (julelys_manager) ──► Raspberry Pi 3/4/5
 | 74HC4051 | U2 | 8-channel analog MUX for row selection |
 | 74AHCT1G125 | U6-U9 | Level shifters (3.3V → 5V) |
 | BC847BDW1T1G | U4 | Dual transistor for DTR/RTS auto-reset |
+| 74LVC1G08 | U10 | ANDs CP2102N TX and Pi TX into ESP32 RX |
+| AO3400A | Q1 | Fan low-side switch |
 | SP0503BAHT | D7 | USB ESD protection |
-| SS34 | D6 | Schottky diode for RPi power isolation |
 
 ## SPI Interface (Raspberry Pi ↔ ESP32)
 
@@ -89,27 +90,50 @@ Claude AI ──► Mac (julelys_manager) ──► Raspberry Pi 3/4/5
 
 ## Raspberry Pi GPIO Header (J1)
 
-Standard 40-pin Raspberry Pi header compatible with RPi 3/4/5:
+Standard 40-pin header for RPi 4/5. The first v4 draft kept the Orange Pi pin
+numbers (pin 17 = Pi 3V3 on MISO, pin 30 = GND on ESP32 RX). Check J1 in the
+netlist after every schematic edit. KiCad 7's CLI has no ERC, so run ERC in the
+GUI:
+`kicad-cli sch export netlist --format kicadsexpr -o /tmp/j.net Julelys.kicad_sch`.
 
-| Function | RPi Pins |
-|----------|----------|
-| 5V_OPI (isolated) | 2, 4 |
-| 3.3V | 1, 17 |
-| GND | 6, 9, 14, 20, 25, 30, 34, 39 |
-| SPI0_MOSI | 19 |
-| SPI0_MISO | 21 |
-| SPI0_SCLK | 23 |
-| SPI0_CE0 | 24 |
+All pins not listed are no-connect.
+
+| RPi Pin | RPi GPIO | Net | ESP32 / HAT side |
+|---------|----------|-----|------------------|
+| 2, 4 | 5V | +5V | Pi powered from the HAT, no diode |
+| 1, 17 | 3V3 | - | Leave unconnected (do not tie to the HAT's 3V3) |
+| 6, 9, 14, 20, 25, 30, 34, 39 | GND | GND | |
+| 19 | GPIO10 | MOSI | ESP32 GPIO 6 |
+| 21 | GPIO9 | MISO | ESP32 GPIO 2 |
+| 23 | GPIO11 | SCLK | ESP32 GPIO 3 |
+| 24 | GPIO8 | CS | ESP32 GPIO 10 |
+| 8 | GPIO14 (TXD) | PI_TX | U10 AND gate -> ESP32 RX (GPIO 20) |
+| 10 | GPIO15 (RXD) | PI_RX | ESP32 TX (GPIO 21) |
+| 29 | GPIO5 | PI_EN | ESP32 EN (CHIP_UP), via R28 1k |
+| 31 | GPIO6 | PI_BOOT | ESP32 GPIO 9, via R29 1k |
+| 12 | GPIO18 (PWM0) | FAN_PWM | Fan MOSFET gate |
+| 18 | GPIO24 | FAN_TACH | Fan tach, pull-up to 3V3 |
+| 27, 28 | ID_SD / ID_SC | - | Reserved for the HAT ID EEPROM, do not use |
+
+Notes:
+- GPIO5/6 default to input with pull-up, so the Pi never holds the ESP32 in reset
+  or boot mode while it boots. Drive them low or leave them floating; never drive
+  them high.
+- ESP32 RX has two drivers, the Pi and the CP2102N (`USB_TX`). U10 (74LVC1G08)
+  ANDs them, with R26/R27 10k pull-ups, so either one can talk to the ESP32.
+- IO9 now has an external pull-up (R30 10k). It had none before.
+- Pi 4: GPIO14/15 is the Linux console by default. Disable the console and set
+  `enable_uart=1`. Pi 5 has a separate debug UART, so GPIO14/15 is free.
 
 ## Connectors
 
 | Reference | Type | Function |
 |-----------|------|----------|
 | J1 | 2x20 Pin Socket | Raspberry Pi 40-pin GPIO header |
-| J2 | 1x13 Pin Socket | GPIO breakout |
 | J3 | 2x6 Pin Header | Debug/programming |
 | J4-J11 | JST B3B-XH-A (x8) | LED strip outputs (5V, Data, GND) |
 | J12 | 1x3 Pin Header | Auxiliary connector |
+| J13 | 1x3 Pin Header | Fan (FAN-, +5V, tach) |
 | P1 | USB-C | Power + programming |
 | V_IN1, V_IN2 | Screw Terminal (x2) | External 5V input (parallel, ~20A total) |
 
@@ -121,30 +145,19 @@ Standard 40-pin Raspberry Pi header compatible with RPi 3/4/5:
 - **Regulator:** AMS1117-3.3V (1A) for ESP32 and logic ICs
 - **LED power:** Direct 5V passthrough to JST connectors
 
-### Raspberry Pi Power Protection
+### Raspberry Pi Power (v4)
 
-The RPi receives isolated power via a dedicated protection circuit:
+The Pi is powered from the HAT: +5V goes straight to J1 pins 2/4. **There is no
+diode.** The SS34 from the earlier draft (D6, 3A, 0.5V drop) is too weak for a
+Pi 5 (5A) and drops too much voltage. Parallel Schottkys do not share current
+well. If isolation is needed later, use a MOSFET ideal diode.
 
-```
-+5V (main) ────────────────────────► LED strips, ESP32, etc.
-     │
-     └──►|── D6 (SS34) ──┬── C15 (470uF) ──► 5V_OPI ──► J1 (RPi)
-                         │
-                         └── C16 (100nF)
-                         │
-                         └── GND
-```
-
-**Purpose:** When LEDs draw high current (up to 26A), voltage can dip momentarily. The Schottky diode prevents the LEDs from draining the bulk capacitor, keeping the Raspberry Pi stable during current spikes.
-
-**Components:**
-| Reference | Value | Function |
-|-----------|-------|----------|
-| D6 | SS34 (3A Schottky) | Prevents reverse current flow |
-| C15 | 470uF/10V | Bulk capacitor for RPi holdup |
-| C16 | 100nF | High-frequency bypass |
-
-**Note:** The diode causes ~0.5V drop, so RPi receives ~4.5V. This is within spec (RPi operates down to ~4.0V).
+- Keep the bulk capacitor (470uF) plus 100nF at the header. Without a diode,
+  surviving LED current spikes depends on the PSU and on thick copper.
+- **Never plug in the Pi's own USB-C while the HAT powers it.** The two supplies
+  would fight each other.
+- Pi 5 needs `PSU_MAX_CURRENT=5000` in its EEPROM config (`rpi-eeprom-config -e`).
+  Without it, USB is limited to 600mA and the Pi warns about the supply.
 
 ## Production Output
 
@@ -170,11 +183,46 @@ Generated to `production/` with timestamped subfolders:
 - FreeRTOS task-based architecture
 - UART console for diagnostics
 
+## v4 Requirements (feature/v4)
+
+v4 is a HAT for **Raspberry Pi 4/5**. It does everything v3.1 does (ESP32-C3,
+mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
+
+- **Board:** 65 x 56 mm HAT outline with M3 holes 58 x 49 mm apart. The layout
+  restarts from the outline; the v3.1 layout is in git history (`0ffda38`) and
+  `Julelys-backups/`.
+- **Pi powered from the HAT**, with no diode (see Power).
+- **Fan control** (`power.kicad_sch`): J13 3-pin header (1 = FAN-, 2 = +5V,
+  3 = tach). Q1 AO3400A switches the low side. R31 100R is the gate resistor
+  from FAN_PWM (GPIO18), R32 100k the gate pull-down, D8 the flyback diode, and
+  R33 10k pulls tach up to 3V3. Use the `pwm-fan`/`gpio-fan` overlay on the Pi.
+  Tach readings are unreliable while PWM is switching. The HAT covers the Pi 5's
+  own fan connector.
+- **Pi can flash the ESP32** over UART plus EN/BOOT (see the J1 table), so no
+  buttons are needed. CP2102N/USB-C stays for debugging.
+- **Auto-reset fixed.** On v3.1 the U4 collectors were swapped, so EN went to
+  IO9 and IO9 to EN. Now the transistor with base <- DTR and emitter -> RTS
+  drives EN (CHIP_UP), as in the Espressif reference. This is why esptool's
+  reset failed on v3.1.
+- **Mux LEDs D1-D3 moved off GPIO8.** GPIO8 is a strapping pin and must be high
+  for download mode, but the LED and 270R pulled it towards about 1.8V. D1-D3
+  now hang off the 5V side (`AS0`-`AS2`, after the level shifters), with
+  R1-R3 = 1k.
+- **Test points** (TP1-TP33, footprint `TestPoint_Pad_1.0x1.0mm`):
+  - Power: +5V (TP1), 3V3 (TP3), VBUS (TP18), GND (TP2, TP19-21).
+  - SPI: TP4-7.
+  - ESP32: EN (TP8), BOOT/IO9 (TP9), RXD (TP10), TXD (TP11), LED data at GPIO7
+    (TP12), PI_TX (TP13), USB_TX (TP14).
+  - Fan: FAN_PWM (TP15), FAN_TACH (TP16), FAN- (TP17).
+  - LED path: mux data input (TP22), mux select AS0-AS2 (TP23-25), and all 8
+    string outputs CH1-CH8 (TP26-33).
+- **Power LEDs:** D5 on 5V (existing) and D9 on 3V3 (with R34 1k).
+
 ## Migration from Orange Pi Zero 2
 
-This PCB was originally designed for Orange Pi Zero 2 (26-pin header). Key changes for Raspberry Pi:
+This PCB was originally designed for Orange Pi Zero 2 (26-pin header). Changes for Raspberry Pi:
 
-1. **J1 upgraded** from 2x13 to 2x20 (40-pin) header
-2. **SPI pins remapped** to RPi SPI0 (GPIO 8/9/10/11)
-3. **Power protection added** (D6, C15, C16) for stable RPi operation
-4. **5V_OPI net** created for isolated RPi power supply
+1. **J1 upgraded** from 2x13 to 2x20 (40-pin) header, and remapped to the Pi pinout.
+2. **J2 removed** (Orange Pi breakout), together with R24/R25 (22R on USB D+/D- to J2).
+3. **Auto-reset** (U4, R12, R13) moved from `power.kicad_sch` to `untitled.kicad_sch`.
+4. **D6/C15/C16 and the `5V_OPI` net** from the first draft are dropped in favour of direct power (see Power).

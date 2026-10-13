@@ -800,6 +800,121 @@
         )
       )
     )
+      (symbol "power:PWR_FLAG"
+  		(power global)
+  		(pin_numbers
+  			(hide yes)
+  		)
+  		(pin_names
+  			(offset 0)
+  			(hide yes)
+  		)
+  		(exclude_from_sim no)
+  		(in_bom yes)
+  		(on_board yes)
+  		(in_pos_files yes)
+  		(duplicate_pin_numbers_are_jumpers no)
+  		(property "Reference" "#FLG"
+  			(at 0 1.905 0)
+  			(show_name no)
+  			(do_not_autoplace no)
+  			(hide yes)
+  			(effects
+  				(font
+  					(size 1.27 1.27)
+  				)
+  			)
+  		)
+  		(property "Value" "PWR_FLAG"
+  			(at 0 3.81 0)
+  			(show_name no)
+  			(do_not_autoplace no)
+  			(effects
+  				(font
+  					(size 1.27 1.27)
+  				)
+  			)
+  		)
+  		(property "Footprint" ""
+  			(at 0 0 0)
+  			(show_name no)
+  			(do_not_autoplace no)
+  			(hide yes)
+  			(effects
+  				(font
+  					(size 1.27 1.27)
+  				)
+  			)
+  		)
+  		(property "Datasheet" ""
+  			(at 0 0 0)
+  			(show_name no)
+  			(do_not_autoplace no)
+  			(hide yes)
+  			(effects
+  				(font
+  					(size 1.27 1.27)
+  				)
+  			)
+  		)
+  		(property "Description" "Special symbol for telling ERC where power comes from"
+  			(at 0 0 0)
+  			(show_name no)
+  			(do_not_autoplace no)
+  			(hide yes)
+  			(effects
+  				(font
+  					(size 1.27 1.27)
+  				)
+  			)
+  		)
+  		(property "ki_keywords" "flag power"
+  			(at 0 0 0)
+  			(show_name no)
+  			(do_not_autoplace no)
+  			(hide yes)
+  			(effects
+  				(font
+  					(size 1.27 1.27)
+  				)
+  			)
+  		)
+  		(symbol "PWR_FLAG_0_0"
+  			(pin power_out line
+  				(at 0 0 90)
+  				(length 0)
+  				(name ""
+  					(effects
+  						(font
+  							(size 1.27 1.27)
+  						)
+  					)
+  				)
+  				(number "1"
+  					(effects
+  						(font
+  							(size 1.27 1.27)
+  						)
+  					)
+  				)
+  			)
+  		)
+  		(symbol "PWR_FLAG_0_1"
+  			(polyline
+  				(pts
+  					(xy 0 0) (xy 0 1.27) (xy -1.016 1.905) (xy 0 2.54) (xy 1.016 1.905) (xy 0 1.27)
+  				)
+  				(stroke
+  					(width 0)
+  					(type default)
+  				)
+  				(fill
+  					(type none)
+  				)
+  			)
+  		)
+  		(embedded_fonts no)
+  	)
   )
 
   (junction (at 77.47 111.76) (diameter 0) (color 0 0 0 0)
@@ -2506,6 +2621,117 @@
       (project "Julelys"
         (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
           (reference "#PWR0227") (unit 1)
+        )
+      )
+    )
+  )
+
+
+  (symbol (lib_id "power:PWR_FLAG") (at 236.22 190.5 0) (unit 1)
+    (in_bom no) (on_board no) (dnp no)
+    (uuid 83540d92-d9ce-48a9-964f-ef070bfa8ef0)
+    (property "Reference" "#FLG01" (at 236.22 188.595 0)
+      (effects (font (size 1.27 1.27) ) )
+    )
+    (property "Value" "PWR_FLAG" (at 236.22 186.69 0)
+      (effects (font (size 1.27 1.27) ) )
+    )
+    (property "Footprint" "" (at 236.22 190.5 0)
+      (effects (font (size 1.27 1.27) )  hide)
+    )
+    (property "Datasheet" "" (at 236.22 190.5 0)
+      (effects (font (size 1.27 1.27) )  hide)
+    )
+    (pin "1" (uuid 21b6661d-5851-43bb-b225-0f8b529eb400))
+    (instances
+      (project "Julelys"
+        (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
+          (reference "#FLG01") (unit 1)
+        )
+      )
+    )
+  )
+
+  (wire (pts (xy 236.22 190.5) (xy 241.3 190.5))
+    (stroke (width 0) (type default))
+    (uuid f80de537-dabd-4875-9176-776d818abb82)
+  )
+
+  (symbol (lib_id "power:+5V") (at 241.3 190.5 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid c0de20c4-e1c1-4038-a5ce-4ba0628703ac)
+    (property "Reference" "#PWR0201" (at 241.3 190.5 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+5V" (at 241.3 186.69 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "" (at 241.3 190.5 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 241.3 190.5 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid f8f414c6-8773-4923-a943-67c98e6ddef8))
+    (instances
+      (project "Julelys"
+        (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
+          (reference "#PWR0201") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "power:PWR_FLAG") (at 256.54 190.5 0) (unit 1)
+    (in_bom no) (on_board no) (dnp no)
+    (uuid 550e0b6e-8bd7-4e6a-9229-be67bf8613d4)
+    (property "Reference" "#FLG02" (at 256.54 188.595 0)
+      (effects (font (size 1.27 1.27) ) )
+    )
+    (property "Value" "PWR_FLAG" (at 256.54 186.69 0)
+      (effects (font (size 1.27 1.27) ) )
+    )
+    (property "Footprint" "" (at 256.54 190.5 0)
+      (effects (font (size 1.27 1.27) )  hide)
+    )
+    (property "Datasheet" "" (at 256.54 190.5 0)
+      (effects (font (size 1.27 1.27) )  hide)
+    )
+    (pin "1" (uuid d6534695-b095-4fba-bd92-a3dea1c7904c))
+    (instances
+      (project "Julelys"
+        (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
+          (reference "#FLG02") (unit 1)
+        )
+      )
+    )
+  )
+
+  (wire (pts (xy 256.54 190.5) (xy 261.62 190.5))
+    (stroke (width 0) (type default))
+    (uuid 955b3357-aa09-4be2-8282-549c3ba2b94f)
+  )
+
+  (symbol (lib_id "power:GND") (at 261.62 190.5 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid 173112ee-cdf4-4779-aaa6-bc7074c8053e)
+    (property "Reference" "#PWR0202" (at 261.62 190.5 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "GND" (at 261.62 194.31 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "" (at 261.62 190.5 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 261.62 190.5 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid f3a0987a-624b-410c-a8e3-b1bca4365415))
+    (instances
+      (project "Julelys"
+        (path "/9ef41b73-8dcb-4021-8930-5b1db22eb182/75d2635a-f2eb-4079-86f3-082e38564c79"
+          (reference "#PWR0202") (unit 1)
         )
       )
     )

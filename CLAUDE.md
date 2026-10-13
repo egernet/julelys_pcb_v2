@@ -218,6 +218,33 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
     string outputs CH1-CH8 (TP26-33).
 - **Power LEDs:** D5 on 5V (existing) and D9 on 3V3 (with R34 1k).
 
+## v4 Layout (first draft)
+
+- **Stackup:** 4 layers. F.Cu and B.Cu carry signals with a GND pour, In1.Cu is
+  a solid GND plane, and In2.Cu is a solid +5V plane. All free copper is GND,
+  stitched with vias. 2 layers was tried and dropped: routing did not complete,
+  and the +5V pour got chopped up by signal traces.
+- **Placement:**
+  - J1 sits on the bottom side at the Pi's position.
+  - V_IN1/V_IN2 and USB-C are on the left edge.
+  - The 8 JST outputs are a 2x4 block next to the power input.
+  - The ESP32 sits on the bottom edge with its antenna out over the edge, and
+    no copper under the antenna on any layer.
+  - The address LEDs D1-D3 are in one row above U2. The power LEDs D5/D9 are
+    next to the power input.
+- **High current:** locked 2 mm tracks, +5V on F.Cu and GND on B.Cu, run from
+  the terminals to the JST pins. A 1 mm +5V track on both layers runs around the
+  left end of J1 to Pi pins 2/4. 2 oz outer copper is recommended.
+- **Status:** autorouted with Freerouting. Before ordering:
+  - Route the 8 remaining connections by hand. Most are around P1/U5: USB D-,
+    VBUS, USB_TX, U5 GND, plus TXD, IO6 and A1.
+  - Move 3 FAN_N tracks away from the right board edge.
+  - Clean up the silkscreen.
+- **Mechanical:** a Pi 5 with the Active Cooler needs taller standoffs than a
+  standard HAT.
+- **Tools:** KiCad 10 is installed (`kicad-cli sch erc`, `kicad-cli pcb drc`).
+  The files are still in KiCad 7 format until they are saved from KiCad 10.
+
 ## Migration from Orange Pi Zero 2
 
 This PCB was originally designed for Orange Pi Zero 2 (26-pin header). Changes for Raspberry Pi:

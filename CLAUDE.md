@@ -236,14 +236,16 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
   the terminals to the JST pins. A 1 mm +5V track on both layers runs around the
   left end of J1 to Pi pins 2/4. 2 oz outer copper is recommended.
 - **Status:** autorouted with Freerouting. Before ordering:
-  - Route the 8 remaining connections by hand. Most are around P1/U5: USB D-,
-    VBUS, USB_TX, U5 GND, plus TXD, IO6 and A1.
+  - Route the 5 remaining connections by hand in KiCad, with the interactive
+    router in shove mode: TXD and IO6 at the ESP32 (U1 pins 12 and 5), USB_TX
+    (U5 pin 26 to R26), and VBUS at P1 A4/A9.
   - Move 3 FAN_N tracks away from the right board edge.
   - Clean up the silkscreen.
 - **Mechanical:** a Pi 5 with the Active Cooler needs taller standoffs than a
   standard HAT.
-- **Tools:** KiCad 10 is installed (`kicad-cli sch erc`, `kicad-cli pcb drc`).
-  The files are still in KiCad 7 format until they are saved from KiCad 10.
+- **Tools:** KiCad 10 (`kicad-cli sch erc`, `kicad-cli pcb drc`). The board
+  file is in KiCad 10 format. The schematics are still in KiCad 7 format until
+  they are saved from KiCad 10.
 
 ## Migration from Orange Pi Zero 2
 

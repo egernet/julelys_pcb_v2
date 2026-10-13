@@ -236,32 +236,38 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
   a solid GND plane, and In2.Cu is a solid +5V plane. All free copper is GND,
   stitched with vias. 2 layers was tried and dropped: routing did not complete,
   and the +5V pour got chopped up by signal traces.
-- **Placement:**
+- **Placement (floorplan v2):**
   - J1 sits on the bottom side at the Pi's position.
-  - V_IN1/V_IN2 and USB-C are on the left edge.
-  - The 8 JST outputs are a 2x4 block next to the power input.
-  - The ESP32 sits on the bottom edge with its antenna out over the edge, and
-    no copper under the antenna on any layer.
-  - The address LEDs D1-D3 are in one row above U2. The power LEDs D5/D9 are
-    next to the power input.
+  - V_IN1/V_IN2 and USB-C are on the left edge, with the 8 JST outputs in a 2x4
+    block next to them.
+  - **The ESP32 (U1) sits top-right, right under J1, with its antenna at the
+    right board edge.** The keepout has no copper on any layer. The antenna is
+    only used in dev-board / stream mode without a Pi. On the Pi the link is
+    SPI, so the Pi's USB/Ethernet metal next to the antenna does not matter.
+    SPI, UART, EN/BOOT and the spare lines to J1 are therefore short.
+  - The ESP32 caps (C2/C3/C6/C7, R30, R35-R38) sit in a row between J1 and the
+    module.
+  - The mux U2 is bottom-centre, with U6-U9, R14-R21 and C18-C21 around it. The
+    address LEDs D1-D3 are in one row under it, and J12 is beside them.
+  - The regulator U3 (C4/C5, D9/R34) and the Pi bulk cap C15 are bottom-left,
+    next to the CP2102N U5. The power LED D5 and R5 sit at the left edge.
+  - SW1/SW2 are on the right edge, under the antenna.
+  - All test points except TP9/TP10 are on the bottom side.
 - **High current:** locked 2 mm tracks, +5V on F.Cu and GND on B.Cu, run from
   the terminals to the JST pins. The Pi's 5V (J1 pins 2/4) is fed only through
   the In2 +5V plane. A track around the left end of J1 would cross the
   mounting-hole land. 2 oz outer copper is recommended.
-- **Status:** 0 DRC errors (JLCPCB rules) and 0 ERC errors. 6 connections still
-  need routing by hand in KiCad (interactive router, shove mode):
-  - A2 at U9 pin 2
-  - IO2 at R35 (two links)
-  - /MCH4 from R17 to U2 pin 12
-  - USB_TX from U5 pin 26 to TP14
-  - GND on C20 pin 2, which needs a via to the plane
-  The spare lines PI_GPIO26/16 are routed but long (about 60 mm, 8-9 vias). The
-  ESP32's IO0/IO1 pins sit at the bottom of the module and J1 at the top.
-- **Decoupling distances** (cap pad to IC power pin): C19 1.7, C20 1.1, C21 2.4,
-  C5 2.3, C3 3.8, C2 4.4, C8 4.0, C18 4.5, C16 5.2 mm. The board is full; getting
-  closer means moving ICs. U8 was nudged 1.3 mm to make room for C19, and R23
-  was moved to make room for C20. A 74AHCT125 quad buffer (TSSOP-14) was tried
-  to replace U6-U9, but there was no 7.8 x 5.6 mm free spot near the mux.
+- **Status:** fully routed. 0 DRC errors (JLCPCB rules), 0 unconnected,
+  0 ERC errors, schematic parity clean. Freerouting did most of it; the last
+  connections were routed by a script, using In2 for a few short crossings.
+  Left to do by hand:
+  - Clean up the front silkscreen (overlapping references).
+  - Review the routing.
+- **Decoupling distances** (cap pad to IC power pin): C3 2.3, C2 3.0, C6 3.0,
+  C7 2.2, C8 2.2, C9/C10 2.0, C4/C5 2.5, C17 1.7, C18 2.0, C19 3.2, C20 1.7,
+  C21 1.7 mm. C16 (Pi 5V) is 5.0 mm from J1 pin 4, because the J1 pins need a
+  clear area around them. A 74AHCT125 quad buffer (TSSOP-14) was tried in place
+  of U6-U9 but did not fit.
 - **Schematic review fixes (Codex review):**
   - R35 10k pulls GPIO2 (a strapping pin) up. The Pi's MISO has a default
     pull-down.

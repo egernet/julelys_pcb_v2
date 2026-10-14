@@ -226,7 +226,10 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
 ## Design notes
 
 - `docs/noise-analysis-v4.md`: noise/EMI analysis of v4 (26fc348) with
-  findings and fixes. Re-run it on the test board.
+  findings and fixes.
+- `docs/noise-analysis-test-board.md`: the same analysis on the test board,
+  compared with v4. C36, U11/U12 and D10 are placed too far from J1, the JSTs
+  and V_IN, and the USB pair is not yet routed as a pair.
 - `docs/esp32-c3-chip-design.md`: bare ESP32-C3FH4 + chip antenna + native USB
   (test board, branch `feature/v4-esp32-chip`): reference values, parts and
   layout status. 13 QFN fan-out connections are left to finish by hand in

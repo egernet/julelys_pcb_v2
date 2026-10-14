@@ -2847,7 +2847,7 @@
     (property "Value" "100uF" (at 252.095 167.64 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "Capacitor_SMD:C_1210_3225Metric" (at 252.4252 168.91 0)
+    (property "Footprint" "Capacitor_SMD:C_1206_3216Metric" (at 252.4252 168.91 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (at 251.46 165.1 0)

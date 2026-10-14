@@ -82,10 +82,13 @@ allowed, no pour). Placement:
 - Level shifters U6-U9 in one row (input pin towards the ESP32, output towards
   the mux), each with its 100 nF (C18-C21) right below VCC. C8 is next to U2
   pin 16.
-- LED output protection in one row below the JST connectors:
-  U12 (CH5-8), R47-R50, R43-R46, U11 (CH1-4). Each TVS sits under its own
-  JST column. The pull-down GND pads face down and are tied with a short GND
-  bus; the TVS GND pins each have a via to In1.
+- LED output pull-downs in one row below the JST connectors: R47-R50,
+  R43-R46. Their GND pads face down and are tied with a short GND bus.
+- TVS arrays near the connectors: U11 (CH1-4) right of the J4-J7 column,
+  U12 (CH5-8) below the V_IN terminals. D10 (+5V TVS) near USB-C/V_IN2.
+- C36 (Pi bulk, 100 µF 1206) next to J1 pins 2/4, with C16.
+- USB D+/D- run below the JST block and do not cross the LED current area.
+  R40 sits next to R39 under U1 pins 25/26.
 
 Routing: F.Cu, **In2.Cu (mixed: signals plus the +5V pour)** and B.Cu. In1.Cu
 is a solid GND plane, the reference for the signals and the RF line.

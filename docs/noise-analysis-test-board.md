@@ -58,3 +58,31 @@ about 58 mm, not routed as a pair, and crossing the LED area.
 The measurements listed in `docs/noise-analysis-v4.md` still apply once boards
 exist. For this board, also measure RSSI against a WROOM-02 board, and check
 that USB stays connected at full LED brightness.
+
+## Update: fixes applied (2026-10-14)
+
+Recommendations 1-3 were applied. Re-measured on the new layout:
+
+| Item | Before | After |
+|---|---|---|
+| C36 (Pi bulk) to J1 pin 2/4 | 39 mm | **5 mm**. C36 is now 100 µF 1206 (6.3 V X5R); a 1210 did not fit between J1, the mounting hole and V_IN1. C16 moved next to it. |
+| U11 TVS pin to JST data pin (CH1-4) | 10-31 mm | **7-12 mm** (U11 to the right of the J4-J7 column) |
+| U12 TVS pin to JST data pin (CH5-8) | 9-31 mm | **8-22 mm** (U12 below the V_IN terminals). The terminals sit left of the J8-J11 column, so there is no closer spot. |
+| D10 to V_IN | 28-35 mm | **19-30 mm**. The terminal block leaves no room next to it. |
+| USB through the JST block | crosses it | **0 mm inside** |
+| USB D+ / D- | 57 / 59 mm, 2 vias each | 55 / 68 mm, 6 / 8 vias, mostly F.Cu |
+| CH1-CH8 length | 27-60 mm | 33-54 mm |
+| GND stitching vias | 205 | 216 |
+| +5V plane on In2 | 2288 mm² | 2380 mm², J1 pins 2/4 in the main piece |
+
+The USB pair has to cross the ESP32 -> shifter -> mux -> 330 Ω -> JST
+chain, which splits the board, so a few short B.Cu hops are unavoidable
+without moving that chain. For full-speed USB, 13 mm of length mismatch
+(about 80 ps) and the vias do not matter. Keeping the pair out of the LED
+current area was the point.
+
+C36 at 1206 has less effective capacitance at 5 V than the 1210 (X5R DC bias).
+Expect roughly 30-40 µF effective. That is still useful close to the pins,
+together with the PSU and copper.
+
+Still open: the QFN fan-out (recommendation 4), then RF/crystal re-check.

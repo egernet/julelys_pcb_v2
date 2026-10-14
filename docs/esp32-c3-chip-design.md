@@ -79,6 +79,13 @@ allowed, no pour). Placement:
 - Crystal Y1 with L2/C30/C31 at pins 29/30.
 - R39/R40 (USB), R42 (TX) and the pull-ups sit just outside a 2.5 mm escape
   ring around the QFN.
+- Level shifters U6-U9 in one row (input pin towards the ESP32, output towards
+  the mux), each with its 100 nF (C18-C21) right below VCC. C8 is next to U2
+  pin 16.
+- LED output protection in one row below the JST connectors:
+  U12 (CH5-8), R47-R50, R43-R46, U11 (CH1-4). Each TVS sits under its own
+  JST column. The pull-down GND pads face down and are tied with a short GND
+  bus; the TVS GND pins each have a via to In1.
 
 Routing: F.Cu, **In2.Cu (mixed: signals plus the +5V pour)** and B.Cu. In1.Cu
 is a solid GND plane, the reference for the signals and the RF line.
@@ -86,14 +93,15 @@ Stackup: JLC04161H-7628 (0.21 mm prepreg). RF net class: 0.33 mm width.
 The zones join SMD pads solid; through-hole pads use thermal reliefs, except
 J1, which is solid.
 
-**0 DRC errors.** 14 connections are left, all at the QFN: the autorouters
-cannot do the fan-out at a 0.5 mm pitch. **Finish them by hand in KiCad:**
+**0 DRC errors, no dangling tracks or vias.** 13 connections are left, all at
+the QFN: the autorouters cannot do the fan-out at a 0.5 mm pitch. **Finish
+them by hand in KiCad:**
 - RF_IN: U1 pin 1 to C32/L3. Keep it short and straight; the RF line is 0.33 mm.
 - XTAL_P: U1 pin 30 to L2. XTAL_N: U1 pin 29 to Y1 pin 3.
 - U_TX: U1 pin 28 to R42. RXD: U1 pin 27 to R27/J1 pin 8.
 - IO0: U1 pin 4 to R37. IO2: pin 6. CHIP_UP (EN): pin 7.
-- IO6 (MOSI): pin 12. IO7: pin 13. A2: pin 14. A1: pin 10 to U8 pin 2.
-- R41 (D+ pull-up, DNP): +3.3V.
+- IO6 (MOSI): pin 12. IO7: pin 13. A2: pin 14.
+- R41 (D+ pull-up, DNP): +3.3V (two connections).
 
 Suggested method: short stubs straight out of each pin, then a via to In2/B.Cu
 about 1-1.5 mm out, staggered. Keep the RF/crystal side on F.Cu over In1.

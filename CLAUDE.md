@@ -229,7 +229,7 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
   findings and fixes. Re-run it on the test board.
 - `docs/esp32-c3-chip-design.md`: bare ESP32-C3FH4 + chip antenna + native USB
   (test board, branch `feature/v4-esp32-chip`): reference values, parts and
-  layout status. 14 QFN fan-out connections are left to finish by hand in
+  layout status. 13 QFN fan-out connections are left to finish by hand in
   KiCad.
 
 ## v4 Layout (first draft)

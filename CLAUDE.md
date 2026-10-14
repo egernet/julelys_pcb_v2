@@ -223,6 +223,13 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
     string outputs CH1-CH8 (TP26-33).
 - **Power LEDs:** D5 on 5V (existing) and D9 on 3V3 (with R34 1k).
 
+## Design notes
+
+- `docs/noise-analysis-v4.md`: noise/EMI analysis of v4 (26fc348) with
+  findings and fixes. Re-run it on the test board.
+- `docs/esp32-c3-chip-design.md`: bare ESP32-C3FH4 + chip antenna + native USB
+  (test board, branch `feature/v4-esp32-chip`): reference values and parts.
+
 ## v4 Layout (first draft)
 
 - **HAT mechanical spec** (raspberrypi/hats `hat-board-mechanical.pdf`): the

@@ -68,3 +68,34 @@ on the real board with a VNA, or at least check RSSI against a module board.
 - Firmware: set `CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG` (julelys_esp32).
 - Recovery if the firmware disables USB: hold BOOT (SW1) and press RESET (SW2).
 - UART0 stays on J1 pins 8/10 for the Pi or an external USB-UART adapter.
+
+## Layout status (2026-10-14)
+
+Floorplan v3: the ESP32-C3FH4 (U1) is top-right under J1, with pin 1 (RF)
+facing the Walsin antenna at the right edge (6 x 6 mm keep-out, feed track
+allowed, no pour). Placement:
+- RF chain C32/L3/C33 at pin 1, and L4/C34/C35 at the antenna feed.
+- Decoupling: VDDA C25/C26, RTC C27, CPU C28, VDD_SPI C29, and VDD3P3 L1/C24.
+- Crystal Y1 with L2/C30/C31 at pins 29/30.
+- R39/R40 (USB), R42 (TX) and the pull-ups sit just outside a 2.5 mm escape
+  ring around the QFN.
+
+Routing: F.Cu, **In2.Cu (mixed: signals plus the +5V pour)** and B.Cu. In1.Cu
+is a solid GND plane, the reference for the signals and the RF line.
+Stackup: JLC04161H-7628 (0.21 mm prepreg). RF net class: 0.33 mm width.
+The zones join SMD pads solid; through-hole pads use thermal reliefs, except
+J1, which is solid.
+
+**0 DRC errors.** 14 connections are left, all at the QFN: the autorouters
+cannot do the fan-out at a 0.5 mm pitch. **Finish them by hand in KiCad:**
+- RF_IN: U1 pin 1 to C32/L3. Keep it short and straight; the RF line is 0.33 mm.
+- XTAL_P: U1 pin 30 to L2. XTAL_N: U1 pin 29 to Y1 pin 3.
+- U_TX: U1 pin 28 to R42. RXD: U1 pin 27 to R27/J1 pin 8.
+- IO0: U1 pin 4 to R37. IO2: pin 6. CHIP_UP (EN): pin 7.
+- IO6 (MOSI): pin 12. IO7: pin 13. A2: pin 14. A1: pin 10 to U8 pin 2.
+- R41 (D+ pull-up, DNP): +3.3V.
+
+Suggested method: short stubs straight out of each pin, then a via to In2/B.Cu
+about 1-1.5 mm out, staggered. Keep the RF/crystal side on F.Cu over In1.
+After routing, re-run the noise analysis and compare with
+`docs/noise-analysis-v4.md`.

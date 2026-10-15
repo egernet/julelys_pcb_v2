@@ -106,3 +106,39 @@ were re-placed first, so this re-checks finding 13:
 All four recommendations are now done. What is left is measuring real boards:
 RSSI against a WROOM-02 board, crystal frequency with the TX tone test, and
 USB stability at full LED brightness.
+
+## Update: as ordered (2026-10-15, after fan-out and sensor parts)
+
+Re-measured on the board that went into `production/Julelys_v4-test_*`.
+
+| Item | After fixes 1-3 | Now | Comment |
+|---|---|---|---|
+| +5V plane on In2 | 2380 mm² | **2560 mm²**, one piece | In2 signals went from 377 to 128 mm |
+| Signals on B.Cu (over the +5V plane) | 406 mm | 596 mm | Moved from In2 during the QFN rework. Same trade-off as finding 4: at these speeds it is acceptable |
+| GND stitching vias | 216 | 223 | |
+| RF_IN / RF_LINE / ANT | - | 2.3 / 5.4 / 3.6 mm, 0.33 mm, no vias | RF chain straight out of pin 1 |
+| XTAL_P / XTAL_N | - | 1.5 / 8.1 mm, F.Cu, no vias | XTAL_N goes around the Y1 GND pad |
+| CHIP_UP / IO9 | 49 / 46 mm | 51 / 56 mm | Still well below v4 (90 / 74 mm) |
+| RXD / IO2 | 29 / 36 mm | 60 / 51 mm | Longer after the QFN rework; UART/SPI speeds are low |
+| USB D+ / D- | 55 / 68 mm | 62 / 73 mm | Still out of the LED current area |
+| CH1-CH8 | 33-54 mm | 33-54 mm | Unchanged |
+| C36 to J1, TVS to JSTs | 5 mm, 7-22 mm | unchanged | |
+
+### New: sensor read-back parts
+
+- **IO0 (46 mm, 10 vias)** is joined to the LED data line through R52 (15k).
+  In Julelys mode it carries the LED data, filtered by C40 (10 nF):
+  RC = 6k x 10 nF = 60 us against an 800 kHz signal, so only a few mV of
+  ripple reach pin 4. C40 sits 12 mm from the pin, but it filters the whole
+  node because the node impedance is set by the 15k. Not a noise risk.
+- **IO1 / U6 /OE (47 mm, mostly B.Cu)** is high impedance in Julelys mode,
+  held low only by R51 (10k, 1.4 mm from U6). A spike above about 0.8 V
+  would blank LED data for its duration. The risk is low, but it is free to
+  remove: **the Julelys firmware should drive GPIO1 low** (output) at start-up.
+
+### Verdict
+
+No new critical findings. The two things to do are in firmware: drive GPIO1
+low in Julelys mode, and limit total LED current (finding 3). Then measure on
+real boards: flicker, Pi 5V at J1 during full-white steps, heat, RSSI against
+a WROOM-02 board, crystal TX tone, and USB at full LED brightness.

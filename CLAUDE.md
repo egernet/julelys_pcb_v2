@@ -125,8 +125,9 @@ Notes:
 - The spare lines (IO0/IO1 to Pi GPIO26/16) are free for interrupt or handshake
   use. The 1k resistors protect against both sides driving at once. IO0/IO1 are
   not strapping pins.
-- **Test board (`feature/v4-esp32-chip`):** IO0/IO1 are used for sensor
-  read-back on the 8 JST outputs, see `docs/sensor-input.md`. IO1 high
+- **Test board (`feature/v4-esp32-chip`):** in dev-board use (not Julelys),
+  IO0/IO1 read up to 8 analog sensors on the JST outputs, see
+  `docs/sensor-input.md`. In Julelys mode IO1 is left alone and nothing changes. IO1 high
   tri-states the LED data shifter U6, the mux selects a channel, and IO0
   (ADC1_CH0) reads it through R52/R53. R51 keeps U6 enabled at boot. If a Pi
   is fitted, leave its GPIO26/16 as inputs.
@@ -235,8 +236,8 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
 - `docs/noise-analysis-test-board.md`: the same analysis on the test board,
   compared with v4, plus re-measurements after moving C36, U11/U12, D10 and
   the USB route.
-- `docs/sensor-input.md`: reading up to 8 analog sensors through the LED
-  JST outputs (test board).
+- `docs/sensor-input.md`: dev-board use only, reading up to 8 analog sensors
+  through the LED JST outputs (test board).
 - `docs/esp32-c3-chip-design.md`: bare ESP32-C3FH4 + chip antenna + native USB
   (test board, branch `feature/v4-esp32-chip`): reference values, parts and
   layout status. The test board is fully routed (0 DRC errors, 0

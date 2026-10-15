@@ -30,7 +30,7 @@ Sources:
 | CHIP_EN (7) | 10 kΩ pull-up + 1 µF (both existing) |
 | XTAL_P (30) / XTAL_N (29) | 40 MHz ±10 ppm. **24 nH in series on XTAL_P.** Load caps per CL, then trim with TX tone. |
 | LNA_IN (1) | CLC match close to the chip: shunt C 1.2-1.8 pF, series L 2.0-3.0 nH, shunt C 1.2-1.8 pF. 50 Ω line to the antenna. |
-| U0TXD (28) | 499 Ω series |
+| U0TXD (28) | 499 Ω series (fitted: 510 Ω, the nearest JLC Basic part) |
 | GPIO18/19 (25/26) | USB D-/D+, 22-33 Ω series near the chip. D+ pull-up optional (footprint DNP). |
 | Strapping | GPIO2 pull-up (R35), GPIO8 pull-up (R23), GPIO9 pull-up (R30). No large cap on GPIO9. |
 
@@ -49,7 +49,7 @@ Sources:
   2.7 nH shunt, 3.9 nH series).
 - RF 0402: 1.2/1.5/1.8 pF = C1551/C1552/C1553; 2.2/2.7/3.0 nH = C86061/C77108/C19898.
 - 24 nH 0402: C74301.
-- 22 Ω 0402 C25092 (Basic). 499 Ω 0402 C4125.
+- 22 Ω 0402 C25092 (Basic). TX series resistor: 510 Ω 0402 C25123 (Basic) instead of 499 Ω C4125 (Extended).
 
 ## RF line
 

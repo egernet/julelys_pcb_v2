@@ -5446,7 +5446,7 @@
     (property "Reference" "R42" (at 339.852 251.46 90)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "499" (at 337.82 251.46 90)
+    (property "Value" "510" (at 337.82 251.46 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "Resistor_SMD:R_0402_1005Metric" (at 336.042 251.46 90)

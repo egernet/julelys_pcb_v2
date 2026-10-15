@@ -4861,7 +4861,7 @@
 				)
 			)
 		)
-		(property "Value" "1N5819HW-7-F"
+		(property "Value" "B5819W"
 			(at 0 2.1 90)
 			(layer "F.Fab")
 			(uuid "2a7d343b-b921-4571-b9bb-a9355957fcf9")
@@ -12998,7 +12998,7 @@
 				)
 			)
 		)
-		(property "Value" "499"
+		(property "Value" "510"
 			(at 0 1.17 180)
 			(layer "F.Fab")
 			(uuid "ee9d50d6-8c70-42b5-b19b-863d75642bce")

@@ -35,8 +35,9 @@ DRC: 0 errors, 0 unconnected. ERC: 0 errors.
 - Test points and mounting holes have no parts.
 - **LCSC numbers:** every BOM line is filled in. All were checked against
   JLC's parts library on 2026-10-15 (value, package, stock). Basic parts are
-  used wherever one exists. About 17 lines are Extended parts (U1, U2, U6-U9,
-  U11/U12, Y1, AE1, L1-L4, P1, D4, D7, D10, C15, R42, SW1/SW2); JLC charges a
+  used wherever one exists. About 15 lines are Extended parts (U1, U2, U6-U9,
+  U11/U12, Y1, AE1, L1-L4, P1, D7, D10, C15, SW1/SW2). R42 (510 ohm) and D4
+  (B5819W) were switched to Basic parts to save two setup fees; JLC charges a
   setup fee per Extended part type, except for "preferred" ones (C1552, D10,
   U11/U12).
 - Capacitors on +5V are rated 10 V or more, except C36 (100 uF 1206, 6.3 V,

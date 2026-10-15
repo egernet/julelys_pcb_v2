@@ -111,8 +111,8 @@ All pins not listed are no-connect.
 | 10 | GPIO15 (RXD) | PI_RX | ESP32 TX (GPIO 21) |
 | 29 | GPIO5 | PI_EN | ESP32 EN (CHIP_UP), via R28 1k |
 | 31 | GPIO6 | PI_BOOT | ESP32 GPIO 9, via R29 1k |
-| 37 | GPIO26 | PI_GPIO26 | ESP32 GPIO 0 via R37 1k (spare line) |
-| 36 | GPIO16 | PI_GPIO16 | ESP32 GPIO 1 via R38 1k (spare line) |
+| 37 | GPIO26 | PI_GPIO26 | ESP32 GPIO 0 via R37 1k. Test board: sensor ADC input (keep the Pi pin an input) |
+| 36 | GPIO16 | PI_GPIO16 | ESP32 GPIO 1 via R38 1k. Test board: U6 /OE for sensor read-back (keep the Pi pin an input) |
 | 27, 28 | ID_SD / ID_SC | - | Reserved for the HAT ID EEPROM, do not use |
 
 Notes:
@@ -125,6 +125,11 @@ Notes:
 - The spare lines (IO0/IO1 to Pi GPIO26/16) are free for interrupt or handshake
   use. The 1k resistors protect against both sides driving at once. IO0/IO1 are
   not strapping pins.
+- **Test board (`feature/v4-esp32-chip`):** IO0/IO1 are used for sensor
+  read-back on the 8 JST outputs, see `docs/sensor-input.md`. IO1 high
+  tri-states the LED data shifter U6, the mux selects a channel, and IO0
+  (ADC1_CH0) reads it through R52/R53. R51 keeps U6 enabled at boot. If a Pi
+  is fitted, leave its GPIO26/16 as inputs.
 - **Dev board use without a Pi:** J1 (the socket on the bottom) doubles as the
   ESP32 header, used with male dupont wires. It carries SPI (IO6/2/3/10 on pins
   19/21/23/24), TXD (pin 10), RXD (pin 8, through U10), EN/BOOT (29/31, 1k),
@@ -230,6 +235,8 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
 - `docs/noise-analysis-test-board.md`: the same analysis on the test board,
   compared with v4, plus re-measurements after moving C36, U11/U12, D10 and
   the USB route.
+- `docs/sensor-input.md`: reading up to 8 analog sensors through the LED
+  JST outputs (test board).
 - `docs/esp32-c3-chip-design.md`: bare ESP32-C3FH4 + chip antenna + native USB
   (test board, branch `feature/v4-esp32-chip`): reference values, parts and
   layout status. The test board is fully routed (0 DRC errors, 0

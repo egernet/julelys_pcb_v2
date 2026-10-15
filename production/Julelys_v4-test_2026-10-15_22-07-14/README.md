@@ -17,7 +17,8 @@ DRC: 0 errors, 0 unconnected. ERC: 0 errors.
 - Layers: **4**, size 65 x 56 mm, thickness 1.6 mm
 - Stackup: **JLC04161H-7628** (the RF line is sized for its 0.21 mm prepreg)
 - Impedance control: **yes** (RF line 0.33 mm on F.Cu over In1 GND, about 50 ohm)
-- Copper: 1 oz outer / 1 oz inner (0.5 oz inner is JLC's default, change it)
+- Copper: 1 oz outer / 0.5 oz inner (what JLC04161H-7628 uses; the RF line is
+  calculated with it). "Specify Stackup" must be **Yes** to pick JLC04161H-7628.
 - Min track/space: 0.15 mm at the ESP32 QFN, 0.2 mm elsewhere. Vias 0.6/0.3 mm.
 - Via covering: tented
 - Surface finish: **ENIG** recommended (0.5 mm pitch QFN); lead-free HASL also works

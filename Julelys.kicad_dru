@@ -33,3 +33,9 @@
 	(severity ignore)
 	(condition "(A.Reference == 'U1' && B.Reference == 'R36') || (A.Reference == 'U8' && B.Reference == 'C20') || (A.Reference == 'U9' && B.Reference == 'C21') || (A.Reference == 'U3' && B.Reference == 'C5') || (A.Reference == 'V_IN2' && B.Reference == 'R8')")
 	(constraint courtyard_clearance (min 0mm)))
+
+# QFN fan-out around U1 (0.5 mm pitch): 0.15 mm clearance inside the rule area QFN_FAN.
+# Still well inside JLC's 0.1 mm limit.
+(rule "QFN fan-out"
+	(condition "A.intersectsArea('QFN_FAN') && B.intersectsArea('QFN_FAN')")
+	(constraint clearance (min 0.15mm)))

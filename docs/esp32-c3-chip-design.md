@@ -69,16 +69,28 @@ on the real board with a VNA, or at least check RSSI against a module board.
 - Recovery if the firmware disables USB: hold BOOT (SW1) and press RESET (SW2).
 - UART0 stays on J1 pins 8/10 for the Pi or an external USB-UART adapter.
 
-## Layout status (2026-10-14)
+## Layout status (2026-10-15)
 
 Floorplan v3: the ESP32-C3FH4 (U1) is top-right under J1, with pin 1 (RF)
 facing the Walsin antenna at the right edge (6 x 6 mm keep-out, feed track
-allowed, no pour). Placement:
-- RF chain C32/L3/C33 at pin 1, and L4/C34/C35 at the antenna feed.
-- Decoupling: VDDA C25/C26, RTC C27, CPU C28, VDD_SPI C29, and VDD3P3 L1/C24.
-- Crystal Y1 with L2/C30/C31 at pins 29/30.
-- R39/R40 (USB), R42 (TX) and the pull-ups sit just outside a 2.5 mm escape
-  ring around the QFN.
+allowed, no pour). The parts around the QFN were re-placed so that every pin
+can escape:
+- RF chain runs straight out of pin 1 on F.Cu: C32 (shunt) at the pin, L3
+  (series), C33 (shunt), then a 45-degree line up to L4/C34 and the antenna.
+  RF_IN 2.3 mm, RF_LINE 5.4 mm, ANT 3.6 mm, all 0.33 mm wide, no vias.
+- VDD3P3: pins 2/3 run below the IO escapes to C24 (1 uF), then L1 (2 nH),
+  then +3.3V. C24 is 2.6 mm from pin 2.
+- Crystal Y1 sits below pins 29/30. XTAL_P goes through L2 (24 nH) to Y1
+  pin 1, XTAL_N runs around the Y1 GND pad to pin 3. All on F.Cu, no vias.
+  XTAL_N is 8.1 mm because it has to go around that pad. Load caps C30/C31
+  sit at the crystal pins.
+- Decoupling at the pins: VDDA C25/C26 bottom-right (1.5/2.3 mm), RTC C27
+  above pin 11 (2.8 mm), CPU C28 (1.5 mm), VDD_SPI C29 (1.7 mm).
+- USB series resistors R40 (D-) and R39 (D+) left of pins 25/26. R41 (DNP)
+  and R42 (TX) next to them.
+- Moved out of the fan-out area: C1/C6 (EN caps) to the right next to R4,
+  R23/R36 (A2/IO7 pull-ups) next to the level shifters U9/U6, R30 a little
+  to the left, TP5/TP9 (bottom side) onto their nets.
 - Level shifters U6-U9 in one row (input pin towards the ESP32, output towards
   the mux), each with its 100 nF (C18-C21) right below VCC. C8 is next to U2
   pin 16.
@@ -96,17 +108,11 @@ Stackup: JLC04161H-7628 (0.21 mm prepreg). RF net class: 0.33 mm width.
 The zones join SMD pads solid; through-hole pads use thermal reliefs, except
 J1, which is solid.
 
-**0 DRC errors, no dangling tracks or vias.** 13 connections are left, all at
-the QFN: the autorouters cannot do the fan-out at a 0.5 mm pitch. **Finish
-them by hand in KiCad:**
-- RF_IN: U1 pin 1 to C32/L3. Keep it short and straight; the RF line is 0.33 mm.
-- XTAL_P: U1 pin 30 to L2. XTAL_N: U1 pin 29 to Y1 pin 3.
-- U_TX: U1 pin 28 to R42. RXD: U1 pin 27 to R27/J1 pin 8.
-- IO0: U1 pin 4 to R37. IO2: pin 6. CHIP_UP (EN): pin 7.
-- IO6 (MOSI): pin 12. IO7: pin 13. A2: pin 14.
-- R41 (D+ pull-up, DNP): +3.3V (two connections).
+**Fully routed: 0 DRC errors, 0 unconnected, no dangling tracks or vias.**
 
-Suggested method: short stubs straight out of each pin, then a via to In2/B.Cu
-about 1-1.5 mm out, staggered. Keep the RF/crystal side on F.Cu over In1.
-After routing, re-run the noise analysis and compare with
-`docs/noise-analysis-v4.md`.
+QFN fan-out: every pin leaves on F.Cu in a short stub. The right and top pins
+then drop to In2/B.Cu through staggered vias. Signal tracks at the QFN are
+0.15 mm. A rule area named `QFN_FAN` around U1 lowers the clearance to
+0.15 mm (rule "QFN fan-out" in `Julelys.kicad_dru`), which is still well
+inside JLC's 0.1 mm limit. Outside that area the 0.2 mm net class clearances
+apply.

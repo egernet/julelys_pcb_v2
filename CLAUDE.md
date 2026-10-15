@@ -232,8 +232,9 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
   the USB route.
 - `docs/esp32-c3-chip-design.md`: bare ESP32-C3FH4 + chip antenna + native USB
   (test board, branch `feature/v4-esp32-chip`): reference values, parts and
-  layout status. 13 QFN fan-out connections are left to finish by hand in
-  KiCad.
+  layout status. The test board is fully routed (0 DRC errors, 0
+  unconnected). The QFN area uses 0.15 mm clearance via the `QFN_FAN` rule
+  area.
 
 ## v4 Layout (first draft)
 

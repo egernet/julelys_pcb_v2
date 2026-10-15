@@ -85,4 +85,24 @@ C36 at 1206 has less effective capacitance at 5 V than the 1210 (X5R DC bias).
 Expect roughly 30-40 µF effective. That is still useful close to the pins,
 together with the PSU and copper.
 
-Still open: the QFN fan-out (recommendation 4), then RF/crystal re-check.
+
+## Update: QFN fan-out done (2026-10-15)
+
+The board is fully routed (0 DRC errors, 0 unconnected). The parts around U1
+were re-placed first, so this re-checks finding 13:
+
+| Item | Result |
+|---|---|
+| RF_IN (pin 1 to C32/L3) | 2.3 mm, 0.33 mm, F.Cu over In1 GND, no vias |
+| RF_LINE (L3 to L4) | 5.4 mm, 0.33 mm, no vias. The chain runs straight out of pin 1, so no IO escape crosses it on F.Cu |
+| ANT (L4 to antenna) | 3.6 mm, widened from 0.2 to 0.33 mm |
+| XTAL_P / XTAL_PX | 1.5 / 3.8 mm, F.Cu, no vias, through L2 |
+| XTAL_N | 8.1 mm, F.Cu, no vias. Longer than ideal, because it goes around the Y1 GND pad. At 40 MHz this only adds a little stray capacitance; trim the load caps with the TX tone test |
+| Other nets under Y1 | A1, IO2, IO9 and PI_BOOT on B.Cu/In2, below the In1 GND plane. One IO9 via sits next to the Y1 GND pad (pin 4), not at the XTAL pins |
+| Decoupling to pin | C24 2.6, C25 1.5, C26 2.3, C27 2.8, C28 1.5, C29 1.7 mm |
+| USB D+ / D- | 62 / 73 mm, 6 / 8 vias. Still out of the LED current area. The ~11 mm mismatch (about 70 ps) does not matter at full speed |
+| QFN fan-out | 0.15 mm tracks with 0.15 mm clearance inside the `QFN_FAN` rule area (JLC allows 0.1 mm) |
+
+All four recommendations are now done. What is left is measuring real boards:
+RSSI against a WROOM-02 board, crystal frequency with the TX tone test, and
+USB stability at full LED brightness.

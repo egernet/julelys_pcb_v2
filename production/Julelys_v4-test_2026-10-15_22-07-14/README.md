@@ -8,6 +8,10 @@ board; the folder name is from when it was still called the test board.
   Both keep their footprints, so the gerbers did not need regenerating.
 - Checked again 2026-11-14 on be8179b: DRC 0 errors, 0 unconnected. ERC: 0 errors
   (2026-10-15).
+- 2026-11-14: U2 changed from Nexperia 74HC4051D,653 (C9386, out of stock at
+  JLC assembly) to onsemi MC74HC4051ADR2G (C16870), same SOIC-16 pinout. Check
+  pin 1 in JLC's placement preview, since its library footprint may be rotated
+  differently.
 
 ## Files
 

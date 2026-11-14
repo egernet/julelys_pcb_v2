@@ -11,6 +11,26 @@ Julelys is a complete smart Christmas light system consisting of three component
 
 The system drives a **440 SK6812 RGBW LED matrix (8x55)** and supports AI control via Model Context Protocol (MCP).
 
+## Board status
+
+**v4 is this branch, `feature/v4-esp32-chip`.** It was ordered in November 2026 from
+`production/Julelys_v4-test_2026-10-15_22-07-14/` (the folder name is from
+when it was still a test board). Compared with the first v4 draft it has:
+
+- a bare **ESP32-C3FH4** with a Walsin chip antenna instead of the
+  ESP32-C3-WROOM-02 module, see `docs/esp32-c3-chip-design.md`;
+- the ESP32's **native USB Serial/JTAG** instead of the CP2102N, so the U4
+  auto-reset transistors and the U10 AND gate are gone;
+- the noise fixes from `docs/noise-analysis-v4.md`: pull-downs on CH1-CH8,
+  TVS arrays U11/U12, TVS D10 on +5V, bulk C36 at J1, and 510 R on TXD.
+
+`feature/v4` holds the module-based draft (`26fc348`, tag `v4-module-draft`),
+which was never produced. v3.1 (gerbers 2025-11-16) is the board in use for
+the 2026 season until v4 is tested.
+
+Some sections below were written for the module draft; the BOM in the
+production folder and `docs/esp32-c3-chip-design.md` describe this board.
+
 ## System Architecture
 
 ```
@@ -65,15 +85,18 @@ Claude AI ──► Mac (julelys_manager) ──► Raspberry Pi 4/5
 
 | Component | Reference | Function |
 |-----------|-----------|----------|
-| ESP32-C3-WROOM-02 | U1 | Main MCU, SPI slave, RMT LED driver |
-| CP2102N-A02-GQFN28 | U5 | USB to UART for programming |
+| ESP32-C3FH4 (QFN-32, 4 MB flash) | U1 | Main MCU, SPI slave, RMT LED driver, native USB |
+| 40 MHz crystal | Y1 | ESP32 clock |
+| RFANT3216120A5T | AE1 | Chip antenna, matched by C32/L3/C33 and L4 (C34/C35 DNP for tuning) |
 | AMS1117-3.3 | U3 | 5V → 3.3V LDO regulator |
 | 74HC4051 | U2 | 8-channel analog MUX for row selection |
 | 74AHCT1G125 | U6-U9 | Level shifters (3.3V → 5V) |
-| BC847BDW1T1G | U4 | Dual transistor for DTR/RTS auto-reset |
-| 74LVC1G08 | U10 | ANDs CP2102N TX and Pi TX into ESP32 RX |
-| AO3400A | Q1 | Fan low-side switch |
+| SRV05-4 | U11, U12 | TVS arrays on CH1-4 and CH5-8 |
+| SMBJ5.0A | D10 | TVS on +5V |
 | SP0503BAHT | D7 | USB ESD protection |
+
+The CP2102N (U5), the auto-reset transistors (U4), the UART AND gate (U10) and
+the fan switch (Q1) from earlier revisions are not on v4.
 
 ## SPI Interface (Raspberry Pi ↔ ESP32)
 
@@ -107,25 +130,26 @@ All pins not listed are no-connect.
 | 21 | GPIO9 | MISO | ESP32 GPIO 2 |
 | 23 | GPIO11 | SCLK | ESP32 GPIO 3 |
 | 24 | GPIO8 | CS | ESP32 GPIO 10 |
-| 8 | GPIO14 (TXD) | PI_TX | U10 AND gate -> ESP32 RX (GPIO 20) |
+| 8 | GPIO14 (TXD) | RXD | ESP32 RX (GPIO 20), R27 10k pull-up |
 | 10 | GPIO15 (RXD) | PI_RX | ESP32 TX (GPIO 21) |
 | 29 | GPIO5 | PI_EN | ESP32 EN (CHIP_UP), via R28 1k |
 | 31 | GPIO6 | PI_BOOT | ESP32 GPIO 9, via R29 1k |
-| 37 | GPIO26 | PI_GPIO26 | ESP32 GPIO 0 via R37 1k. Test board: sensor ADC input (keep the Pi pin an input) |
-| 36 | GPIO16 | PI_GPIO16 | ESP32 GPIO 1 via R38 1k. Test board: U6 /OE for sensor read-back (keep the Pi pin an input) |
+| 37 | GPIO26 | PI_GPIO26 | ESP32 GPIO 0 via R37 1k. Sensor mode: ADC ADC input (keep the Pi pin an input) |
+| 36 | GPIO16 | PI_GPIO16 | ESP32 GPIO 1 via R38 1k. Sensor mode: U6 /OE for sensor read-back (keep the Pi pin an input) |
 | 27, 28 | ID_SD / ID_SC | - | Reserved for the HAT ID EEPROM, do not use |
 
 Notes:
 - GPIO5/6 default to input with pull-up, so the Pi never holds the ESP32 in reset
   or boot mode while it boots. Drive them low or leave them floating; never drive
   them high.
-- ESP32 RX has two drivers, the Pi and the CP2102N (`USB_TX`). U10 (74LVC1G08)
-  ANDs them, with R26/R27 10k pull-ups, so either one can talk to the ESP32.
+- ESP32 RX goes straight to Pi TXD, with R27 10k pull-up. USB uses the
+  ESP32's native USB, so nothing else drives RX (v3.1 and the module draft had
+  the CP2102N and the U10 AND gate here).
 - IO9 now has an external pull-up (R30 10k). It had none before.
 - The spare lines (IO0/IO1 to Pi GPIO26/16) are free for interrupt or handshake
   use. The 1k resistors protect against both sides driving at once. IO0/IO1 are
   not strapping pins.
-- **Test board (`feature/v4-esp32-chip`):** in dev-board use (not Julelys),
+- **Sensor input (v4):** in dev-board use (not Julelys),
   IO0/IO1 read up to 8 analog sensors on the JST outputs, see
   `docs/sensor-input.md`. In Julelys mode IO1 is left alone and nothing changes. IO1 high
   tri-states the LED data shifter U6, the mux selects a channel, and IO0
@@ -133,7 +157,7 @@ Notes:
   is fitted, leave its GPIO26/16 as inputs.
 - **Dev board use without a Pi:** J1 (the socket on the bottom) doubles as the
   ESP32 header, used with male dupont wires. It carries SPI (IO6/2/3/10 on pins
-  19/21/23/24), TXD (pin 10), RXD (pin 8, through U10), EN/BOOT (29/31, 1k),
+  19/21/23/24), TXD (pin 10), RXD (pin 8), EN/BOOT (29/31, 1k),
   IO0/IO1 (37/36, 1k), 5V (2/4) and GND. IO4/5/8 (mux select) and IO7 (LED data)
   are used on the board and can be probed on the test points. This replaces the
   v3.1 debug header J3, which was removed in v4.
@@ -196,10 +220,10 @@ Generated to `production/` with timestamped subfolders:
 - FreeRTOS task-based architecture
 - UART console for diagnostics
 
-## v4 Requirements (feature/v4)
+## v4 Requirements
 
 v4 is a HAT for **Raspberry Pi 4/5**. It does everything v3.1 does (ESP32-C3,
-mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
+mux, level shifters, USB-C, 8 JST outputs, screw terminals), plus:
 
 - **Board:** 65 x 56 mm HAT outline with M3 holes 58 x 49 mm apart. The layout
   restarts from the outline; the v3.1 layout is in git history (`0ffda38`) and
@@ -209,11 +233,11 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
   circuit from the first v4 draft was removed, and Pi GPIO18/24 are free.
 - **J3 removed:** J1 doubles as the dev header (see the J1 table).
 - **Pi can flash the ESP32** over UART plus EN/BOOT (see the J1 table), so no
-  buttons are needed. CP2102N/USB-C stays for debugging.
-- **Auto-reset fixed.** On v3.1 the U4 collectors were swapped, so EN went to
-  IO9 and IO9 to EN. Now the transistor with base <- DTR and emitter -> RTS
-  drives EN (CHIP_UP), as in the Espressif reference. This is why esptool's
-  reset failed on v3.1.
+  buttons are needed. USB-C stays for debugging.
+- **Auto-reset works.** On v3.1 the U4 collectors were swapped, so EN went to
+  IO9 and IO9 to EN, which is why esptool's reset failed. The module draft
+  fixed the transistors; v4 drops them, because the native USB Serial/JTAG
+  resets the chip itself. Recovery: hold BOOT (SW1) and press RESET (SW2).
 - **Mux LEDs D1-D3 moved off GPIO8.** GPIO8 is a strapping pin and must be high
   for download mode, but the LED and 270R pulled it towards about 1.8V. D1-D3
   now hang off the 5V side (`AS0`-`AS2`, after the level shifters), with
@@ -224,7 +248,7 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
   - Power: +5V (TP1), 3V3 (TP3), VBUS (TP18), GND (TP2, TP19-21).
   - SPI: TP4-7.
   - ESP32: EN (TP8), BOOT/IO9 (TP9), RXD (TP10), TXD (TP11), LED data at GPIO7
-    (TP12), PI_TX (TP13), USB_TX (TP14).
+    (TP12). TP13/TP14 (PI_TX/USB_TX) left with the CP2102N.
   - LED path: mux data input (TP22), mux select AS0-AS2 (TP23-25), and the
     string outputs CH1-CH8 (TP26-33).
 - **Power LEDs:** D5 on 5V (existing) and D9 on 3V3 (with R34 1k).
@@ -233,18 +257,22 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
 
 - `docs/noise-analysis-v4.md`: noise/EMI analysis of v4 (26fc348) with
   findings and fixes.
-- `docs/noise-analysis-test-board.md`: the same analysis on the test board,
+- `docs/noise-analysis-test-board.md`: the same analysis on v4 as ordered,
   compared with v4, plus re-measurements after moving C36, U11/U12, D10 and
   the USB route.
 - `docs/sensor-input.md`: dev-board use only, reading up to 8 analog sensors
-  through the LED JST outputs (test board).
+  through the LED JST outputs.
 - `docs/esp32-c3-chip-design.md`: bare ESP32-C3FH4 + chip antenna + native USB
-  (test board, branch `feature/v4-esp32-chip`): reference values, parts and
-  layout status. The test board is fully routed (0 DRC errors, 0
+  (v4): reference values, parts and layout status. The board is fully routed (0 DRC errors, 0
   unconnected). The QFN area uses 0.15 mm clearance via the `QFN_FAN` rule
   area.
 
-## v4 Layout (first draft)
+## v4 Layout
+
+Written for the module draft. Mechanics, stackup, power routing and
+placement outside the ESP32 still hold; the ESP32 area is described in
+`docs/esp32-c3-chip-design.md`.
+
 
 - **HAT mechanical spec** (raspberrypi/hats `hat-board-mechanical.pdf`): the
   board is 65 x 56.0 mm, because 56.5 mm applies only to an SMT GPIO header. It
@@ -300,7 +328,7 @@ mux, level shifters, CP2102N/USB-C, 8 JST outputs, screw terminals), plus:
   Known and accepted: JST-XH is rated 3 A per pin against 3.3 A for a full-white
   string, with no per-string fuse (limit brightness in firmware). USB VBUS feeds
   +5V through D4 (1 A), so program over USB without LED load.
-- **Fab rules:** JLCPCB 4-layer, 1 oz outer / 1 oz inner
+- **Fab rules:** JLCPCB 4-layer, JLC04161H-7628 stackup, 1 oz outer / 0.5 oz inner
   (https://jlcpcb.com/capabilities/pcb-capabilities). The limits are in
   `Julelys.kicad_pro` and `Julelys.kicad_dru`:
   - min track and space 0.1 mm

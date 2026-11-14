@@ -1,7 +1,13 @@
-# Julelys v4 test board - JLCPCB production files
+# Julelys v4 - JLCPCB production files
 
-Generated 2026-10-15 from `feature/v4-esp32-chip` (commit 542077f), KiCad 10.
-DRC: 0 errors, 0 unconnected. ERC: 0 errors.
+Generated 2026-10-15 from `feature/v4-esp32-chip`, KiCad 10. This is the v4
+board; the folder name is from when it was still called the test board.
+
+- Gerbers: commit 542077f.
+- BOM and CPL: commit 77e7524, which changed R42 to 510 ohm and D4 to B5819W.
+  Both keep their footprints, so the gerbers did not need regenerating.
+- Checked again 2026-11-14 on be8179b: DRC 0 errors, 0 unconnected. ERC: 0 errors
+  (2026-10-15).
 
 ## Files
 

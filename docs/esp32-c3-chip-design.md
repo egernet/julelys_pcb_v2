@@ -1,4 +1,4 @@
-# Bare ESP32-C3 + native USB (test board, feature/v4-esp32-chip)
+# Bare ESP32-C3 + native USB (v4, feature/v4-esp32-chip)
 
 Research notes from 2026-10-14 for replacing the ESP32-C3-WROOM-02 module
 with a bare chip and a chip antenna (A), and the CP2102N with the ESP32-C3's
@@ -89,7 +89,7 @@ can escape:
 - USB series resistors R40 (D-) and R39 (D+) left of pins 25/26. R41 (DNP)
   and R42 (TX) next to them.
 - Moved out of the fan-out area: C1/C6 (EN caps) to the right next to R4,
-  R23/R36 (A2/IO7 pull-ups) next to the level shifters U9/U6, R30 a little
+  R23 (A2 pull-up) and R36 (IO7 pull-down) next to the level shifters U9/U6, R30 a little
   to the left, TP5/TP9 (bottom side) onto their nets.
 - Level shifters U6-U9 in one row (input pin towards the ESP32, output towards
   the mux), each with its 100 nF (C18-C21) right below VCC. C8 is next to U2

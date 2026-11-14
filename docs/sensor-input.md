@@ -1,4 +1,4 @@
-# Sensor input on the LED outputs (test board)
+# Sensor input on the LED outputs (v4)
 
 Added 2026-10-15 on `feature/v4-esp32-chip`. **For dev-board use only**, when
 the board is not driving Julelys lights. Then the 8 JST connectors (J4-J11)
